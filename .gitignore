@@ -1,3 +1,6 @@
+# Outputs
+/dest/
+
 # Logs
 logs
 *.log

@@ -1,0 +1,28 @@
+{
+  "extends": ["eslint:recommended"],
+  "plugins": [],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "globals": {
+    "window": false,
+    "document": false,
+    "console": false,
+    "Uint32Array": false,
+    "Uint8ClampedArray": false,
+    "Promise": false,
+    "Set": false,
+    "BigInt": false
+  },
+  "rules": {
+    "eqeqeq": "warn",
+    "no-extra-semi": "warn",
+    "no-undef": "error",
+    "no-unused-vars": "warn"
+  }
+}

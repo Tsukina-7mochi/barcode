@@ -1,0 +1,72 @@
+[
+  {
+      "value": 0,
+      "parity": "OOOOOO",
+      "left-odd": "0001101",
+      "left-even": "0100111",
+      "right": "1110010"
+  },
+  {
+      "value": 1,
+      "parity": "OOEOEE",
+      "left-odd": "0011001",
+      "left-even": "0110011",
+      "right": "1100110"
+  },
+  {
+      "value": 2,
+      "parity": "OOEEOE",
+      "left-odd": "0010011",
+      "left-even": "0011011",
+      "right": "1101100"
+  },
+  {
+      "value": 3,
+      "parity": "OOEEEO",
+      "left-odd": "0111101",
+      "left-even": "0100001",
+      "right": "1000010"
+  },
+  {
+      "value": 4,
+      "parity": "OEOOEE",
+      "left-odd": "0100011",
+      "left-even": "0011101",
+      "right": "1011100"
+  },
+  {
+      "value": 5,
+      "parity": "OEEOOE",
+      "left-odd": "0110001",
+      "left-even": "0111001",
+      "right": "1001110"
+  },
+  {
+      "value": 6,
+      "parity": "OEEEOO",
+      "left-odd": "0101111",
+      "left-even": "0000101",
+      "right": "1010000"
+  },
+  {
+      "value": 7,
+      "parity": "OEOEOE",
+      "left-odd": "0111011",
+      "left-even": "0010001",
+      "right": "1000100"
+  },
+  {
+      "value": 8,
+      "parity": "OEOEEO",
+      "left-odd": "0110111",
+      "left-even": "0001001",
+      "right": "1001000"
+  },
+  {
+      "value": 9,
+      "parity": "OEEOEO",
+      "left-odd": "0001011",
+      "left-even": "0010111",
+      "right": "1110100"
+  }
+]

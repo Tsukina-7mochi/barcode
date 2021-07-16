@@ -1,16 +1,37 @@
 import pattern from '../patterns/jan/pattern.json';
 
-// 13 と 8 で別々にする
+const calcCheckDigit = function(code: string): number {
+  const len = code.length - 1;
+  const numArr = code.slice(0, code.length - 1).split('').map(v => parseInt(v));
+  const even = numArr.reduce((acc, cur, i) => ((len - i) % 2 === 0 ? acc + cur : acc), 0);
+  const odd  = numArr.reduce((acc, cur, i) => ((len - i) % 2 === 1 ? acc + cur : acc), 0);
+
+  return (10 - (odd * 3 + even) % 10) % 10;
+}
+
 export default function JAN(binary: string): string | undefined {
-  return length13(binary) || length8(binary);
+  const part = binary.split(/0{7,}/);
+
+  console.log(part);
+
+
+  for(const p of part) {
+    const result13 = length13(p);
+    if(result13) return result13;
+
+    const result8 = length8(p);
+    if(result8) return result8;
+  }
+
+  return;
 }
 
 function length13(binary_: string): string | undefined {
   let binary = binary_;
 
   // left margin
-  const leftMargin = binary.search('0'.repeat(11) + '101');
-  binary = binary.slice(leftMargin + 14);
+  if(!binary.startsWith('101')) return;
+  binary = binary.slice(3);
   console.log(binary);
 
   // left data
@@ -73,15 +94,19 @@ function length13(binary_: string): string | undefined {
 
   console.log(prefix + left + right);
 
-  return prefix + left + right;
+  const result = prefix + left + right;
+
+  if(parseInt(right) % 10 !== calcCheckDigit(result)) return;
+
+  return result;
 }
 
 function length8(binary_: string): string | undefined {
   let binary = binary_;
 
   // left margin
-  const leftMargin = binary.search('0'.repeat(7) + '101');
-  binary = binary.slice(leftMargin + 10);
+  if(!binary.startsWith('101')) return;
+  binary = binary.slice(3);
   console.log(binary);
 
   // left data
@@ -124,5 +149,9 @@ function length8(binary_: string): string | undefined {
 
   console.log(left + right);
 
-  return left + right;
+  const result = left + right;
+
+  if(parseInt(right) % 10 !== calcCheckDigit(result)) return;
+
+  return result;
 }

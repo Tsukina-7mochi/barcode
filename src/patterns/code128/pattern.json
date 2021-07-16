@@ -1,8 +1,8 @@
 [
   {
     "value": 0,
-    "codeA": "SP",
-    "codeB": "SP",
+    "codeA": " ",
+    "codeB": " ",
     "codeC": 0,
     "pattern": "11011001100"
   },
@@ -50,8 +50,8 @@
   },
   {
     "value": 7,
-    "codeA": "' '",
-    "codeB": "7",
+    "codeA": "'",
+    "codeB": "'",
     "codeC": 1,
     "pattern": "1100111011"
   },
@@ -85,8 +85,8 @@
   },
   {
     "value": 12,
-    "codeA": "'",
-    "codeB": "'",
+    "codeA": ",",
+    "codeB": ",",
     "codeC": 12,
     "pattern": "10110011100"
   },
@@ -449,225 +449,225 @@
   },
   {
     "value": 64,
-    "codeA": "NUL",
+    "codeA": "\u0000",
     "codeB": "`",
     "codeC": 64,
     "pattern": "10100001100"
   },
   {
     "value": 65,
-    "codeA": "SOH",
+    "codeA": "\u0001",
     "codeB": "a",
     "codeC": 65,
     "pattern": "10010110000"
   },
   {
     "value": 66,
-    "codeA": "STX",
+    "codeA": "\u0002",
     "codeB": "b",
     "codeC": 66,
     "pattern": "10010000110"
   },
   {
     "value": 67,
-    "codeA": "ETX",
+    "codeA": "\u0003",
     "codeB": "c",
     "codeC": 67,
     "pattern": "10000101100"
   },
   {
     "value": 68,
-    "codeA": "EOT",
+    "codeA": "\u0004",
     "codeB": "d",
     "codeC": 68,
     "pattern": "10000100110"
   },
   {
     "value": 69,
-    "codeA": "ENQ",
+    "codeA": "\u0005",
     "codeB": "e",
     "codeC": 69,
     "pattern": "10110010000"
   },
   {
     "value": 70,
-    "codeA": "ACK",
+    "codeA": "\u0006",
     "codeB": "f",
     "codeC": 70,
     "pattern": "10110000100"
   },
   {
     "value": 71,
-    "codeA": "BEL",
+    "codeA": "\u0007",
     "codeB": "g",
     "codeC": 71,
     "pattern": "10011010000"
   },
   {
     "value": 72,
-    "codeA": "BS",
+    "codeA": "\b",
     "codeB": "h",
     "codeC": 72,
     "pattern": "10011000010"
   },
   {
     "value": 73,
-    "codeA": "HT",
-    "codeB": "I",
+    "codeA": "\t",
+    "codeB": "i",
     "codeC": 73,
     "pattern": "10000110100"
   },
   {
     "value": 74,
-    "codeA": "LF",
+    "codeA": "\n",
     "codeB": "j",
     "codeC": 74,
     "pattern": "10000110010"
   },
   {
     "value": 75,
-    "codeA": "VT",
+    "codeA": "\u000B",
     "codeB": "k",
     "codeC": 75,
     "pattern": "11000010010"
   },
   {
     "value": 76,
-    "codeA": "FF",
+    "codeA": "\u000C",
     "codeB": "l",
     "codeC": 76,
     "pattern": "11001010000"
   },
   {
     "value": 77,
-    "codeA": "CR",
+    "codeA": "\r",
     "codeB": "m",
     "codeC": 77,
     "pattern": "11110111010"
   },
   {
     "value": 78,
-    "codeA": "SO",
+    "codeA": "\u000E",
     "codeB": "n",
     "codeC": 78,
     "pattern": "11000010100"
   },
   {
     "value": 79,
-    "codeA": "SI",
+    "codeA": "\u000F",
     "codeB": "o",
     "codeC": 79,
     "pattern": "10001111010"
   },
   {
     "value": 80,
-    "codeA": "DLE",
+    "codeA": "\u0010",
     "codeB": "p",
     "codeC": 80,
     "pattern": "10100111100"
   },
   {
     "value": 81,
-    "codeA": "DC1",
+    "codeA": "\u0011",
     "codeB": "q",
     "codeC": 81,
     "pattern": "10010111100"
   },
   {
     "value": 82,
-    "codeA": "DC2",
+    "codeA": "\u0012",
     "codeB": "r",
     "codeC": 82,
     "pattern": "10010011110"
   },
   {
     "value": 83,
-    "codeA": "DC3",
+    "codeA": "\u0013",
     "codeB": "s",
     "codeC": 83,
     "pattern": "10111100100"
   },
   {
     "value": 84,
-    "codeA": "DC4",
+    "codeA": "\u0014",
     "codeB": "t",
     "codeC": 84,
     "pattern": "10011110100"
   },
   {
     "value": 85,
-    "codeA": "NAK",
+    "codeA": "\u0015",
     "codeB": "u",
     "codeC": 85,
     "pattern": "10011110010"
   },
   {
     "value": 86,
-    "codeA": "SYN",
+    "codeA": "\u0016",
     "codeB": "v",
     "codeC": 86,
     "pattern": "11110100100"
   },
   {
     "value": 87,
-    "codeA": "ETB",
+    "codeA": "\u0017",
     "codeB": "w",
     "codeC": 87,
     "pattern": "11110010100"
   },
   {
     "value": 88,
-    "codeA": "CAN",
+    "codeA": "\u0018",
     "codeB": "x",
     "codeC": 88,
     "pattern": "11110010010"
   },
   {
     "value": 89,
-    "codeA": "EM",
+    "codeA": "\u0019",
     "codeB": "y",
     "codeC": 89,
     "pattern": "11011011110"
   },
   {
     "value": 90,
-    "codeA": "SUB",
+    "codeA": "\u001A",
     "codeB": "z",
     "codeC": 90,
     "pattern": "11011110110"
   },
   {
     "value": 91,
-    "codeA": "ESC",
+    "codeA": "\u001B",
     "codeB": "{",
     "codeC": 91,
     "pattern": "11110110110"
   },
   {
     "value": 92,
-    "codeA": "FS",
+    "codeA": "\u001C",
     "codeB": "|",
     "codeC": 92,
     "pattern": "10101111000"
   },
   {
     "value": 93,
-    "codeA": "GS",
-    "codeB": "{",
+    "codeA": "\u001D",
+    "codeB": "}",
     "codeC": 93,
     "pattern": "10100011110"
   },
   {
     "value": 94,
-    "codeA": "RS",
+    "codeA": "\u001E",
     "codeB": "~",
     "codeC": 94,
     "pattern": "10001011110"
   },
   {
     "value": 95,
-    "codeA": "US",
-    "codeB": "DEL",
+    "codeA": "\u001F",
+    "codeB": "\u007F",
     "codeC": 95,
     "pattern": "10111101000"
   },

@@ -1,21 +1,31 @@
-import generateJAN from "./jan";
-import { code128C as generateCode128C } from "./code128";
+import generateJAN from './jan';
+import {
+  code128A as generateCode128A,
+  code128B as generateCode128B,
+  code128C as generateCode128C,
+ } from './code128';
 
-export default function encode(code: string, type: "JAN" | "Code128-C"): ImageData {
-  if(type === "JAN") {
-    if(!/^(\d{13})|(\d{8})$/.test(code)) {
-      throw new Error("invalid code of JAN: " + code);
+type Code128 = 'Code128-A' | 'Code128-B' | 'Code128-C'
+
+export default function encode(data: string, type: 'JAN' | Code128): ImageData {
+  if(type === 'JAN') {
+    if(!/^(\d{13})|(\d{8})$/.test(data)) {
+      throw new Error('invalid code of JAN: ' + data);
     }
 
-    return generateJAN(code);
-  } else if(type === "Code128-C") {
-    if(code.length % 2 !== 0) {
-      throw new Error("Invalid code of Code128-C in length: " + code.length + " (" + code + ")");
+    return generateJAN(data);
+  } else if(type === 'Code128-A') {
+    return generateCode128A(data);
+  } else if(type === 'Code128-B') {
+    return generateCode128B(data);
+  } else if(type === 'Code128-C') {
+    if(data.length % 2 !== 0) {
+      throw new Error('Invalid data of Code128-C in length: ' + data.length + ' (' + data + ')');
     }
 
-    const numArr = Array.from(code.matchAll(/\d\d/g)).map( v => parseInt(v[0]));
+    const numArr = Array.from(data.matchAll(/\d\d/g)).map( v => parseInt(v[0]));
     return generateCode128C(numArr);
   }
 
-  throw new Error("Unsupported type: " + type);
+  throw new Error('Unsupported type: ' + type);
 }

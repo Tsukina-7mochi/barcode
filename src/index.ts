@@ -17,7 +17,7 @@ window.addEventListener('load', () => {
       console.error('The type is not selected');
       return;
     }
-    if(type !== 'JAN' && type !== 'Code128-C') {
+    if(type !== 'JAN' && type !== 'Code128-A' && type !== 'Code128-B' && type !== 'Code128-C') {
       console.error('Unsupported type: ' + type);
       return;
     }

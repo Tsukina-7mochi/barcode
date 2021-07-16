@@ -25,7 +25,7 @@ export default function JAN(code: string): ImageData {
     // left margin
     binary += '0'.repeat(11);
 
-    // left gard bar
+    // left guard bar
     binary += '101';
 
     // left data bar
@@ -45,7 +45,7 @@ export default function JAN(code: string): ImageData {
       binary += pattern[parseInt(right[i])]["right"];
     }
 
-    // right gard bar
+    // right guard bar
     binary += '101';
 
     // right margin
@@ -57,7 +57,7 @@ export default function JAN(code: string): ImageData {
     // left margin
     binary += '0000000';
 
-    // left gard bar
+    // left guard bar
     binary += '101';
 
     // left data bar
@@ -73,7 +73,7 @@ export default function JAN(code: string): ImageData {
       binary += pattern[parseInt(right[i])]["right"];
     }
 
-    // right gard bar
+    // right guard bar
     binary += '101';
 
     // right margin

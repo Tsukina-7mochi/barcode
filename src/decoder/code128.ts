@@ -1,4 +1,5 @@
 import pattern from '../patterns/code128/pattern.json';
+import debug from '../debug';
 
 type pattern = {
   value: number,
@@ -64,7 +65,7 @@ const decode = function(binary_: string): string | undefined {
   // read data
   while(true) {
     let currentPtrn: pattern | undefined = undefined;
-    console.log(data, binary);
+    debug.log(data, binary);
 
     for(const ptrn of pattern) {
       if(binary.startsWith(ptrn.pattern)) {
@@ -116,13 +117,13 @@ const decode = function(binary_: string): string | undefined {
   // remove tailing -1
   value.pop();
 
-  console.log(data);
-  console.log(value);
+  debug.log(data);
+  debug.log(value);
 
   const checkDigit = value.pop();
   if(calcCheckDigit(value) !== checkDigit) return;
 
-  console.log('result: ' + data.slice(0, -1));
+  debug.log('result: ' + data.slice(0, -1));
 
   return data.slice(0, -1);
 }

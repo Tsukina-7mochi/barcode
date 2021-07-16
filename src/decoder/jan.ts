@@ -1,4 +1,5 @@
 import pattern from '../patterns/jan/pattern.json';
+import debug from '../debug';
 
 const calcCheckDigit = function(code: string): number {
   const len = code.length - 1;
@@ -12,7 +13,7 @@ const calcCheckDigit = function(code: string): number {
 export default function JAN(binary: string): string | undefined {
   const part = binary.split(/0{7,}/);
 
-  console.log(part);
+  debug.log(part);
 
 
   for(const p of part) {
@@ -32,7 +33,7 @@ function length13(binary_: string): string | undefined {
   // left margin
   if(!binary.startsWith('101')) return;
   binary = binary.slice(3);
-  console.log(binary);
+  debug.log(binary);
 
   // left data
   const leftData: string[] = [];
@@ -40,7 +41,7 @@ function length13(binary_: string): string | undefined {
     leftData.push(binary.slice(0, 7));
     binary = binary.slice(7);
   }
-  console.log(binary);
+  debug.log(binary);
 
   // center bar
   if(!binary.startsWith('01010')) return;
@@ -52,7 +53,7 @@ function length13(binary_: string): string | undefined {
     rightData.push(binary.slice(0, 7));
     binary = binary.slice(7);
   }
-  console.log(binary);
+  debug.log(binary);
 
   // right gurad bar
   if(!binary.startsWith('101')) return;
@@ -61,8 +62,8 @@ function length13(binary_: string): string | undefined {
   // right margin
   // do nothing
 
-  console.log(leftData);
-  console.log(rightData);
+  debug.log(leftData);
+  debug.log(rightData);
 
   const leftMatch = leftData.map(d => {
     const le = pattern.find(ptrn => ptrn['left-even'] === d);
@@ -76,23 +77,23 @@ function length13(binary_: string): string | undefined {
 
     return;
   });
-  console.log(leftMatch);
+  debug.log(leftMatch);
   if(leftMatch.some(m => m === undefined)) return;
 
   const parityPattern = leftMatch.map(m => m?.parity).join('');
-  console.log(parityPattern);
+  debug.log(parityPattern);
 
   const prefix = pattern.findIndex(ptrn => ptrn.parity === parityPattern);
   if(prefix === -1) return;
 
   const left = leftMatch.map(m => m?.num).join('');
-  console.log(left);
+  debug.log(left);
 
   if(!rightData.every(d => pattern.some(ptrn => ptrn.right === d))) return;
   const right = rightData.map(d => pattern.find(ptrn => ptrn.right === d)?.value).join('');
-  console.log(right);
+  debug.log(right);
 
-  console.log(prefix + left + right);
+  debug.log(prefix + left + right);
 
   const result = prefix + left + right;
 
@@ -107,7 +108,7 @@ function length8(binary_: string): string | undefined {
   // left margin
   if(!binary.startsWith('101')) return;
   binary = binary.slice(3);
-  console.log(binary);
+  debug.log(binary);
 
   // left data
   const leftData: string[] = [];
@@ -115,7 +116,7 @@ function length8(binary_: string): string | undefined {
     leftData.push(binary.slice(0, 7));
     binary = binary.slice(7);
   }
-  console.log(binary);
+  debug.log(binary);
 
   // center bar
   if(!binary.startsWith('01010')) return;
@@ -127,7 +128,7 @@ function length8(binary_: string): string | undefined {
     rightData.push(binary.slice(0, 7));
     binary = binary.slice(7);
   }
-  console.log(binary);
+  debug.log(binary);
 
   // right gurad bar
   if(!binary.startsWith('101')) return;
@@ -136,18 +137,18 @@ function length8(binary_: string): string | undefined {
   // right margin
   // do nothing
 
-  console.log(leftData);
-  console.log(rightData);
+  debug.log(leftData);
+  debug.log(rightData);
 
   if(!leftData.every(d => pattern.some(ptrn => ptrn['left-odd'] === d))) return;
   const left = leftData.map(d => pattern.find(ptrn => ptrn['left-odd'] === d)?.value).join('');
-  console.log(left);
+  debug.log(left);
 
   if(!rightData.every(d => pattern.some(ptrn => ptrn.right === d))) return;
   const right = rightData.map(d => pattern.find(ptrn => ptrn.right === d)?.value).join('');
-  console.log(right);
+  debug.log(right);
 
-  console.log(left + right);
+  debug.log(left + right);
 
   const result = left + right;
 

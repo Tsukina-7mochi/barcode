@@ -2,11 +2,12 @@ import binaryToImageData from "./binaryToImageData";
 import pattern from '../patterns/jan/pattern.json';
 
 const calcCheckDigit = function(code: string): number {
+  const len = code.length - 1;
   const numArr = code.slice(0, code.length - 1).split('').map(v => parseInt(v));
-  const even = numArr.reduce((acc, cur, i) => (i % 2 === 0 ? acc + cur : acc), 0);
-  const odd  = numArr.reduce((acc, cur, i) => (i % 2 === 1 ? acc + cur : acc), 0);
+  const even = numArr.reduce((acc, cur, i) => ((len - i) % 2 === 0 ? acc + cur : acc), 0);
+  const odd  = numArr.reduce((acc, cur, i) => ((len - i) % 2 === 1 ? acc + cur : acc), 0);
 
-  return (10 - (even * 3 + odd) % 10) % 10;
+  return (10 - (odd * 3 + even) % 10) % 10;
 }
 
 export default function JAN(code: string): ImageData {

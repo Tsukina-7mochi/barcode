@@ -27,7 +27,8 @@ module.exports = {
             options: {
               implementation: require('sass'),
               sassOptions: {
-                fiber: require('fibers'),
+                // fiber: require('fibers'),
+                fiber: false,
               },
               sourceMap: true,
             },
@@ -41,7 +42,7 @@ module.exports = {
     ]
   },
   entry: {
-    script: path.join(srcPath, 'index.js')
+    script: path.join(srcPath, 'index.ts')
   },
   output: {
     filename: '[name].js',

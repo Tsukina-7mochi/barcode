@@ -1,6 +1,9 @@
 # Outputs
 /dest/
 
+# Test Files
+/test/
+
 # Logs
 logs
 *.log

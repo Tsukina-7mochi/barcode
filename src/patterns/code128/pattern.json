@@ -1,0 +1,751 @@
+[
+  {
+    "value": 0,
+    "codeA": "SP",
+    "codeB": "SP",
+    "codeC": 0,
+    "pattern": "11011001100"
+  },
+  {
+    "value": 1,
+    "codeA": "!",
+    "codeB": "!",
+    "codeC": 1,
+    "pattern": "11001101100"
+  },
+  {
+    "value": 2,
+    "codeA": "\"",
+    "codeB": "\"",
+    "codeC": 2,
+    "pattern": "110011001"
+  },
+  {
+    "value": 3,
+    "codeA": "#",
+    "codeB": "#",
+    "codeC": 3,
+    "pattern": "10010011000"
+  },
+  {
+    "value": 4,
+    "codeA": "$",
+    "codeB": "$",
+    "codeC": 4,
+    "pattern": "10010001100"
+  },
+  {
+    "value": 5,
+    "codeA": "%",
+    "codeB": "%",
+    "codeC": 5,
+    "pattern": "10001001100"
+  },
+  {
+    "value": 6,
+    "codeA": "&",
+    "codeB": "&",
+    "codeC": 6,
+    "pattern": "10011001000"
+  },
+  {
+    "value": 7,
+    "codeA": "' '",
+    "codeB": "7",
+    "codeC": 1,
+    "pattern": "1100111011"
+  },
+  {
+    "value": 8,
+    "codeA": "(",
+    "codeB": "(",
+    "codeC": 8,
+    "pattern": "10001100100"
+  },
+  {
+    "value": 9,
+    "codeA": ")",
+    "codeB": ")",
+    "codeC": 9,
+    "pattern": "11001001000"
+  },
+  {
+    "value": 10,
+    "codeA": "*",
+    "codeB": "*",
+    "codeC": 10,
+    "pattern": "11001000100"
+  },
+  {
+    "value": 11,
+    "codeA": "+",
+    "codeB": "+",
+    "codeC": 11,
+    "pattern": "11000100100"
+  },
+  {
+    "value": 12,
+    "codeA": "'",
+    "codeB": "'",
+    "codeC": 12,
+    "pattern": "10110011100"
+  },
+  {
+    "value": 13,
+    "codeA": "-",
+    "codeB": "-",
+    "codeC": 13,
+    "pattern": "10011011100"
+  },
+  {
+    "value": 14,
+    "codeA": ".",
+    "codeB": ".",
+    "codeC": 14,
+    "pattern": "10011001110"
+  },
+  {
+    "value": 15,
+    "codeA": "/",
+    "codeB": "/",
+    "codeC": 15,
+    "pattern": "10111001100"
+  },
+  {
+    "value": 16,
+    "codeA": "0",
+    "codeB": "0",
+    "codeC": 16,
+    "pattern": "10011101100"
+  },
+  {
+    "value": 17,
+    "codeA": "1",
+    "codeB": "1",
+    "codeC": 17,
+    "pattern": "10011100110"
+  },
+  {
+    "value": 18,
+    "codeA": "2",
+    "codeB": "2",
+    "codeC": 18,
+    "pattern": "11001110010"
+  },
+  {
+    "value": 19,
+    "codeA": "3",
+    "codeB": "3",
+    "codeC": 19,
+    "pattern": "11001011100"
+  },
+  {
+    "value": 20,
+    "codeA": "4",
+    "codeB": "4",
+    "codeC": 20,
+    "pattern": "11001001110"
+  },
+  {
+    "value": 21,
+    "codeA": "5",
+    "codeB": "5",
+    "codeC": 21,
+    "pattern": "11011100100"
+  },
+  {
+    "value": 22,
+    "codeA": "6",
+    "codeB": "6",
+    "codeC": 22,
+    "pattern": "11001110100"
+  },
+  {
+    "value": 23,
+    "codeA": "7",
+    "codeB": "7",
+    "codeC": 23,
+    "pattern": "11101101110"
+  },
+  {
+    "value": 24,
+    "codeA": "8",
+    "codeB": "8",
+    "codeC": 24,
+    "pattern": "11101001100"
+  },
+  {
+    "value": 25,
+    "codeA": "9",
+    "codeB": "9",
+    "codeC": 25,
+    "pattern": "11100101100"
+  },
+  {
+    "value": 26,
+    "codeA": ":",
+    "codeB": ":",
+    "codeC": 26,
+    "pattern": "11100100110"
+  },
+  {
+    "value": 27,
+    "codeA": ";",
+    "codeB": ";",
+    "codeC": 27,
+    "pattern": "11101100100"
+  },
+  {
+    "value": 28,
+    "codeA": "<",
+    "codeB": "<",
+    "codeC": 28,
+    "pattern": "11100110100"
+  },
+  {
+    "value": 29,
+    "codeA": "=",
+    "codeB": "=",
+    "codeC": 29,
+    "pattern": "11100110010"
+  },
+  {
+    "value": 30,
+    "codeA": ">",
+    "codeB": ">",
+    "codeC": 30,
+    "pattern": "11011011000"
+  },
+  {
+    "value": 31,
+    "codeA": "?",
+    "codeB": "?",
+    "codeC": 31,
+    "pattern": "11011000110"
+  },
+  {
+    "value": 32,
+    "codeA": "@",
+    "codeB": "@",
+    "codeC": 32,
+    "pattern": "11000110110"
+  },
+  {
+    "value": 33,
+    "codeA": "A",
+    "codeB": "A",
+    "codeC": 33,
+    "pattern": "10100011000"
+  },
+  {
+    "value": 34,
+    "codeA": "B",
+    "codeB": "B",
+    "codeC": 34,
+    "pattern": "10001011000"
+  },
+  {
+    "value": 35,
+    "codeA": "C",
+    "codeB": "C",
+    "codeC": 35,
+    "pattern": "10001000110"
+  },
+  {
+    "value": 36,
+    "codeA": "D",
+    "codeB": "D",
+    "codeC": 36,
+    "pattern": "10110001000"
+  },
+  {
+    "value": 37,
+    "codeA": "E",
+    "codeB": "E",
+    "codeC": 37,
+    "pattern": "10001101000"
+  },
+  {
+    "value": 38,
+    "codeA": "F",
+    "codeB": "F",
+    "codeC": 38,
+    "pattern": "10001100010"
+  },
+  {
+    "value": 39,
+    "codeA": "G",
+    "codeB": "G",
+    "codeC": 39,
+    "pattern": "11010001000"
+  },
+  {
+    "value": 40,
+    "codeA": "H",
+    "codeB": "H",
+    "codeC": 40,
+    "pattern": "11000101000"
+  },
+  {
+    "value": 41,
+    "codeA": "I",
+    "codeB": "I",
+    "codeC": 41,
+    "pattern": "11000100010"
+  },
+  {
+    "value": 42,
+    "codeA": "J",
+    "codeB": "J",
+    "codeC": 42,
+    "pattern": "10110111000"
+  },
+  {
+    "value": 43,
+    "codeA": "K",
+    "codeB": "K",
+    "codeC": 43,
+    "pattern": "10110001110"
+  },
+  {
+    "value": 44,
+    "codeA": "L",
+    "codeB": "L",
+    "codeC": 44,
+    "pattern": "10001101110"
+  },
+  {
+    "value": 45,
+    "codeA": "M",
+    "codeB": "M",
+    "codeC": 45,
+    "pattern": "10111011000"
+  },
+  {
+    "value": 46,
+    "codeA": "N",
+    "codeB": "N",
+    "codeC": 46,
+    "pattern": "10111000110"
+  },
+  {
+    "value": 47,
+    "codeA": "O",
+    "codeB": "O",
+    "codeC": 47,
+    "pattern": "10001110110"
+  },
+  {
+    "value": 48,
+    "codeA": "P",
+    "codeB": "P",
+    "codeC": 48,
+    "pattern": "11101110110"
+  },
+  {
+    "value": 49,
+    "codeA": "Q",
+    "codeB": "Q",
+    "codeC": 49,
+    "pattern": "11010001110"
+  },
+  {
+    "value": 50,
+    "codeA": "R",
+    "codeB": "R",
+    "codeC": 50,
+    "pattern": "11000101110"
+  },
+  {
+    "value": 51,
+    "codeA": "S",
+    "codeB": "S",
+    "codeC": 51,
+    "pattern": "11011101000"
+  },
+  {
+    "value": 52,
+    "codeA": "T",
+    "codeB": "T",
+    "codeC": 52,
+    "pattern": "11011100010"
+  },
+  {
+    "value": 53,
+    "codeA": "U",
+    "codeB": "U",
+    "codeC": 53,
+    "pattern": "11011101110"
+  },
+  {
+    "value": 54,
+    "codeA": "V",
+    "codeB": "V",
+    "codeC": 54,
+    "pattern": "11101011000"
+  },
+  {
+    "value": 55,
+    "codeA": "W",
+    "codeB": "W",
+    "codeC": 55,
+    "pattern": "11101000110"
+  },
+  {
+    "value": 56,
+    "codeA": "X",
+    "codeB": "X",
+    "codeC": 56,
+    "pattern": "11100010110"
+  },
+  {
+    "value": 57,
+    "codeA": "Y",
+    "codeB": "Y",
+    "codeC": 57,
+    "pattern": "11101101000"
+  },
+  {
+    "value": 58,
+    "codeA": "Z",
+    "codeB": "Z",
+    "codeC": 58,
+    "pattern": "11101100010"
+  },
+  {
+    "value": 59,
+    "codeA": "[",
+    "codeB": "[",
+    "codeC": 59,
+    "pattern": "11100011010"
+  },
+  {
+    "value": 60,
+    "codeA": "\\",
+    "codeB": "\\",
+    "codeC": 60,
+    "pattern": "11101111010"
+  },
+  {
+    "value": 61,
+    "codeA": "]",
+    "codeB": "]",
+    "codeC": 61,
+    "pattern": "11001000010"
+  },
+  {
+    "value": 62,
+    "codeA": "^",
+    "codeB": "^",
+    "codeC": 62,
+    "pattern": "11110001010"
+  },
+  {
+    "value": 63,
+    "codeA": "_",
+    "codeB": "_",
+    "codeC": 63,
+    "pattern": "10100110000"
+  },
+  {
+    "value": 64,
+    "codeA": "NUL",
+    "codeB": "`",
+    "codeC": 64,
+    "pattern": "10100001100"
+  },
+  {
+    "value": 65,
+    "codeA": "SOH",
+    "codeB": "a",
+    "codeC": 65,
+    "pattern": "10010110000"
+  },
+  {
+    "value": 66,
+    "codeA": "STX",
+    "codeB": "b",
+    "codeC": 66,
+    "pattern": "10010000110"
+  },
+  {
+    "value": 67,
+    "codeA": "ETX",
+    "codeB": "c",
+    "codeC": 67,
+    "pattern": "10000101100"
+  },
+  {
+    "value": 68,
+    "codeA": "EOT",
+    "codeB": "d",
+    "codeC": 68,
+    "pattern": "10000100110"
+  },
+  {
+    "value": 69,
+    "codeA": "ENQ",
+    "codeB": "e",
+    "codeC": 69,
+    "pattern": "10110010000"
+  },
+  {
+    "value": 70,
+    "codeA": "ACK",
+    "codeB": "f",
+    "codeC": 70,
+    "pattern": "10110000100"
+  },
+  {
+    "value": 71,
+    "codeA": "BEL",
+    "codeB": "g",
+    "codeC": 71,
+    "pattern": "10011010000"
+  },
+  {
+    "value": 72,
+    "codeA": "BS",
+    "codeB": "h",
+    "codeC": 72,
+    "pattern": "10011000010"
+  },
+  {
+    "value": 73,
+    "codeA": "HT",
+    "codeB": "I",
+    "codeC": 73,
+    "pattern": "10000110100"
+  },
+  {
+    "value": 74,
+    "codeA": "LF",
+    "codeB": "j",
+    "codeC": 74,
+    "pattern": "10000110010"
+  },
+  {
+    "value": 75,
+    "codeA": "VT",
+    "codeB": "k",
+    "codeC": 75,
+    "pattern": "11000010010"
+  },
+  {
+    "value": 76,
+    "codeA": "FF",
+    "codeB": "l",
+    "codeC": 76,
+    "pattern": "11001010000"
+  },
+  {
+    "value": 77,
+    "codeA": "CR",
+    "codeB": "m",
+    "codeC": 77,
+    "pattern": "11110111010"
+  },
+  {
+    "value": 78,
+    "codeA": "SO",
+    "codeB": "n",
+    "codeC": 78,
+    "pattern": "11000010100"
+  },
+  {
+    "value": 79,
+    "codeA": "SI",
+    "codeB": "o",
+    "codeC": 79,
+    "pattern": "10001111010"
+  },
+  {
+    "value": 80,
+    "codeA": "DLE",
+    "codeB": "p",
+    "codeC": 80,
+    "pattern": "10100111100"
+  },
+  {
+    "value": 81,
+    "codeA": "DC1",
+    "codeB": "q",
+    "codeC": 81,
+    "pattern": "10010111100"
+  },
+  {
+    "value": 82,
+    "codeA": "DC2",
+    "codeB": "r",
+    "codeC": 82,
+    "pattern": "10010011110"
+  },
+  {
+    "value": 83,
+    "codeA": "DC3",
+    "codeB": "s",
+    "codeC": 83,
+    "pattern": "10111100100"
+  },
+  {
+    "value": 84,
+    "codeA": "DC4",
+    "codeB": "t",
+    "codeC": 84,
+    "pattern": "10011110100"
+  },
+  {
+    "value": 85,
+    "codeA": "NAK",
+    "codeB": "u",
+    "codeC": 85,
+    "pattern": "10011110010"
+  },
+  {
+    "value": 86,
+    "codeA": "SYN",
+    "codeB": "v",
+    "codeC": 86,
+    "pattern": "11110100100"
+  },
+  {
+    "value": 87,
+    "codeA": "ETB",
+    "codeB": "w",
+    "codeC": 87,
+    "pattern": "11110010100"
+  },
+  {
+    "value": 88,
+    "codeA": "CAN",
+    "codeB": "x",
+    "codeC": 88,
+    "pattern": "11110010010"
+  },
+  {
+    "value": 89,
+    "codeA": "EM",
+    "codeB": "y",
+    "codeC": 89,
+    "pattern": "11011011110"
+  },
+  {
+    "value": 90,
+    "codeA": "SUB",
+    "codeB": "z",
+    "codeC": 90,
+    "pattern": "11011110110"
+  },
+  {
+    "value": 91,
+    "codeA": "ESC",
+    "codeB": "{",
+    "codeC": 91,
+    "pattern": "11110110110"
+  },
+  {
+    "value": 92,
+    "codeA": "FS",
+    "codeB": "|",
+    "codeC": 92,
+    "pattern": "10101111000"
+  },
+  {
+    "value": 93,
+    "codeA": "GS",
+    "codeB": "{",
+    "codeC": 93,
+    "pattern": "10100011110"
+  },
+  {
+    "value": 94,
+    "codeA": "RS",
+    "codeB": "~",
+    "codeC": 94,
+    "pattern": "10001011110"
+  },
+  {
+    "value": 95,
+    "codeA": "US",
+    "codeB": "DEL",
+    "codeC": 95,
+    "pattern": "10111101000"
+  },
+  {
+    "value": 96,
+    "codeA": "FNC 3",
+    "codeB": "FNC 3",
+    "codeC": 96,
+    "pattern": "10111100010"
+  },
+  {
+    "value": 97,
+    "codeA": "FNC 2",
+    "codeB": "FNC 2",
+    "codeC": 97,
+    "pattern": "11110101000"
+  },
+  {
+    "value": 98,
+    "codeA": "SHIFT",
+    "codeB": "SHIFT",
+    "codeC": 98,
+    "pattern": "11110100010"
+  },
+  {
+    "value": 99,
+    "codeA": "CODE C",
+    "codeB": "CODE C",
+    "codeC": 99,
+    "pattern": "10111011110"
+  },
+  {
+    "value": 100,
+    "codeA": "CODE B",
+    "codeB": "FNC 4",
+    "codeC": "CODE B",
+    "pattern": "10111101110"
+  },
+  {
+    "value": 101,
+    "codeA": "FNC 4",
+    "codeB": "CODE A",
+    "codeC": "CODE A",
+    "pattern": "11101011110"
+  },
+  {
+    "value": 102,
+    "codeA": "FNC 1",
+    "codeB": "FNC 1",
+    "codeC": "FNC 1",
+    "pattern": "11110101110"
+  },
+  {
+    "value": 103,
+    "codeA": "START A",
+    "codeB": "START A",
+    "codeC": "START A",
+    "pattern": "11010000100"
+  },
+  {
+    "value": 104,
+    "codeA": "START B",
+    "codeB": "START B",
+    "codeC": "START B",
+    "pattern": "11010010000"
+  },
+  {
+    "value": 105,
+    "codeA": "START C",
+    "codeB": "START C",
+    "codeC": "START C",
+    "pattern": "11010011100"
+  },
+  {
+    "value": -1,
+    "codeA": "STOP",
+    "codeB": "STOP",
+    "codeC": "STOP",
+    "pattern": "1100011101011"
+  }
+]

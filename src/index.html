@@ -5,11 +5,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="script.js"></script>
 </head>
 <body>
   <div class="input">
-    <input type="text">
-    <button>Generate</button>
+    <input id="code" type="text" value="4908011532403">
+
+    <input type="radio" id="code-type-JAN" name="code-type" value="JAN">
+    <label for="code-type-JAN">JAN</label>
+    <input type="radio" id="code-type-Code128-C" name="code-type" value="Code128-C">
+    <label for="code-type-Code128-C">Code128-C</label>
+
+    <button id="start">Generate</button>
   </div>
   <div id="output">
   </div>

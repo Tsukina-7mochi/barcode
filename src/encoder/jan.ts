@@ -23,7 +23,7 @@ export default function JAN(code: string): ImageData {
     const right = code.slice(7);
 
     // left margin
-    binary += '00000000000';
+    binary += '0'.repeat(11);
 
     // left gard bar
     binary += '101';
@@ -49,7 +49,7 @@ export default function JAN(code: string): ImageData {
     binary += '101';
 
     // right margin
-    binary += '0000000';
+    binary += '0'.repeat(7);
   } else {
     const left = code.slice(0, 4);
     const right = code.slice(4);

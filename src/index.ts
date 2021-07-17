@@ -1,6 +1,7 @@
 import encode from './encoder/encoder';
 import createImage from './createImage';
 import decode from './decoder/decoder';
+import read from './reader/reader';
 
 const getRadioValue = function(name: string): string | undefined {
   const inputs = <NodeListOf<HTMLInputElement>> document.querySelectorAll(`input[name=${name}]`);
@@ -33,5 +34,30 @@ window.addEventListener('load', () => {
     const img = createImage(encode(code, type));
     (<HTMLElement> document.querySelector('div#output')).innerHTML = '';
     document.querySelector('div#output')?.appendChild(img);
+  });
+
+  document.getElementById('fileUpload')?.addEventListener('change', (e: any) => {
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+    console.log(url);
+
+    const img = new Image();
+    img.onload = () => {
+      console.log(url);
+      URL.revokeObjectURL(url);
+
+      const w = Math.min(img.naturalWidth, 1000);
+      const h = w * img.naturalHeight / img.naturalWidth;
+
+      const canvas = <HTMLCanvasElement> document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(img, 0, 0, w, h);
+      const imgData = <ImageData> ctx?.getImageData(0, 0, w, h);
+      console.log('result: ' + read(imgData));
+      ;
+    }
+    img.src = url;
   });
 });

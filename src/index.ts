@@ -46,7 +46,8 @@ window.addEventListener('load', () => {
       console.log(url);
       URL.revokeObjectURL(url);
 
-      const w = Math.min(img.naturalWidth, 1000);
+      // const w = Math.min(img.naturalWidth, 1000);
+      const w = img.naturalWidth;
       const h = w * img.naturalHeight / img.naturalWidth;
 
       const canvas = <HTMLCanvasElement> document.createElement('canvas');

@@ -46,4 +46,73 @@ window.addEventListener('load', () => {
 
     reader.readAsDataURL(file);
   });
+
+  // camera capture
+  const width = 640;
+  const height = 480;
+  const guideRect = {
+    x: 80,
+    y: 180,
+    width: 480,
+    height: 120
+  }
+  const cameraSrc = <HTMLVideoElement> document.getElementById('cameraSrc');
+  navigator.mediaDevices.getUserMedia({
+    audio: false,
+    video: {
+      width: { ideal: width },
+      height: { ideal: height }
+    }
+  }).then((stream) => {
+    cameraSrc.srcObject = stream;
+
+    // register canvas
+    const cameraPreview = <HTMLCanvasElement> document.getElementById('cameraPreview');
+    cameraPreview.setAttribute('width', width + 'px');
+    cameraPreview.setAttribute('height', height + 'px');
+    const cameraPreviewCtx = cameraPreview.getContext('2d');
+
+    if(cameraPreviewCtx) {
+      cameraPreviewCtx.fillStyle = '#FFFFFF';
+      cameraPreviewCtx.strokeStyle = '#FFFFFF';
+      cameraPreviewCtx.lineWidth = 1;
+
+      const drawToCanvas = () => {
+        cameraPreviewCtx.save();
+
+        cameraPreviewCtx.clearRect(0, 0, width, height);
+
+        cameraPreviewCtx.globalAlpha = 0.2;
+        cameraPreviewCtx.fillRect(0, 0, width, height);
+        cameraPreviewCtx.globalAlpha = 1;
+
+        cameraPreviewCtx.clearRect(guideRect.x, guideRect.y, guideRect.width, guideRect.height);
+        cameraPreviewCtx.strokeRect(guideRect.x, guideRect.y, guideRect.width, guideRect.height);
+
+        cameraPreviewCtx.globalCompositeOperation = 'destination-over';
+
+        cameraPreviewCtx.drawImage(cameraSrc, 0, 0);
+
+        cameraPreviewCtx.restore();
+
+        requestAnimationFrame(drawToCanvas);
+      };
+      requestAnimationFrame(drawToCanvas);
+    }
+
+    // register capture button
+    const captureBtn = document.getElementById('capture');
+
+    if(captureBtn) {
+      captureBtn.addEventListener('click', (e) => {
+        const url = cameraPreview.toDataURL();
+
+        read(url).then((str) => {
+          console.log('result: ' + str);
+        })
+      });
+    } else {
+      console.error('no capture button');
+    }
+  });
 });

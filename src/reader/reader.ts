@@ -9,7 +9,7 @@ export default function reader(imageUrl: string): Promise<string> {
       locate: true,
       src: imageUrl
     }, (result) => {
-      if(result.codeResult) {
+      if(result?.codeResult?.code) {
         resolve(result.codeResult.code);
       } else {
         reject('NOT_DETECTED');

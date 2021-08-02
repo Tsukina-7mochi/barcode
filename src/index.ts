@@ -1,6 +1,5 @@
 import encode from './encoder/encoder';
 import createImage from './createImage';
-import decode from './decoder/decoder';
 import read from './reader/reader';
 
 const getRadioValue = function(name: string): string | undefined {

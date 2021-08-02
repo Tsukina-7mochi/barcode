@@ -39,9 +39,9 @@ window.addEventListener('load', () => {
       console.log(url);
       console.log('result: ' + read(url));
 
-      const img = new Image();
-      img.src = url;
-      document.getElementById('output')?.appendChild(img);
+      // const img = new Image();
+      // img.src = url;
+      // document.getElementById('output')?.appendChild(img);
     }
 
     reader.readAsDataURL(file);

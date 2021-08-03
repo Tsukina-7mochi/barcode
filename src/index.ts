@@ -1,3 +1,5 @@
+import './style/main.scss';
+
 import encode from './encoder/encoder';
 import createImage from './createImage';
 import read from './reader/reader';
@@ -101,7 +103,7 @@ window.addEventListener('load', () => {
     }
 
     // register capture button
-    const captureBtn = document.getElementById('capture');
+    const captureBtn = document.querySelector('main .capture button');
 
     if(captureBtn) {
       captureBtn.addEventListener('click', (e) => {

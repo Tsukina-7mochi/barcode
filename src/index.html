@@ -14,33 +14,58 @@
   </style>
 </head>
 <body>
-  <div class="input">
-    <input id="code" type="text" value="4908011532403">
-    <br>
+  <header>
+    <div id="selectMode">
+      <button id="select-barcode"></button>
+      <button id="select-number"></button>
+    </div>
+  </header>
 
-    <input type="radio" id="code-type-JAN" name="code-type" value="JAN" checked>
-    <label for="code-type-JAN">JAN</label>
-    <br>
-    <input type="radio" id="code-type-Code128-A" name="code-type" value="Code128-A">
-    <label for="code-type-Code128-A">Code128-A</label>
-    <br>
-    <input type="radio" id="code-type-Code128-B" name="code-type" value="Code128-B">
-    <label for="code-type-Code128-B">Code128-B</label>
-    <br>
-    <input type="radio" id="code-type-Code128-C" name="code-type" value="Code128-C">
-    <label for="code-type-Code128-C">Code128-C</label>
-    <br>
+  <main>
+    <div id="input-barcode">
+      <!-- video source -->
+      <video id="cameraSrc" autoplay="true" style="display: none;"></video>
 
-    <button id="start">Generate</button>
-    <br>
+      <canvas id="cameraPreview"></canvas>
 
-    <video id="cameraSrc" autoplay="true" style="display: none;"></video>
-    <canvas id="cameraPreview"></canvas>
-    <button id="capture">Capture</button>
+      <div class="uploadFile">
+        <a>Upload image instead of camera</a>
+        <input type="file">
+      </div>
 
-    <input type="file" id="fileUpload">
-  </div>
-  <div id="output">
-  </div>
+      <div class="capture">
+        <button class="unavailable">Capture</button>
+      </div>
+    </div>
+
+    <div id="input-number">
+      <div class="length-13">
+        <input type="number" class="digit0" min="0" max="9" setp="1">
+        <input type="number" class="digit1" min="0" max="9" setp="1">
+        <input type="number" class="digit2" min="0" max="9" setp="1">
+        <input type="number" class="digit3" min="0" max="9" setp="1">
+        <input type="number" class="digit4" min="0" max="9" setp="1">
+        <input type="number" class="digit5" min="0" max="9" setp="1">
+        <input type="number" class="digit6" min="0" max="9" setp="1">
+        <input type="number" class="digit7" min="0" max="9" setp="1">
+        <input type="number" class="digit8" min="0" max="9" setp="1">
+        <input type="number" class="digit9" min="0" max="9" setp="1">
+        <input type="number" class="digit10" min="0" max="9" setp="1">
+        <input type="number" class="digit11" min="0" max="9" setp="1">
+        <input type="number" class="digit12" min="0" max="9" setp="1" readonly>
+      </div>
+
+      <div class="length-8">
+        <input type="number" class="digit0" min="0" max="9" setp="1">
+        <input type="number" class="digit1" min="0" max="9" setp="1">
+        <input type="number" class="digit2" min="0" max="9" setp="1">
+        <input type="number" class="digit3" min="0" max="9" setp="1">
+        <input type="number" class="digit4" min="0" max="9" setp="1">
+        <input type="number" class="digit5" min="0" max="9" setp="1">
+        <input type="number" class="digit6" min="0" max="9" setp="1">
+        <input type="number" class="digit7" min="0" max="9" setp="1" readonly>
+      </div>
+    </div>
+  </main>
 </body>
 </html>

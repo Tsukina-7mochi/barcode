@@ -2,7 +2,8 @@ import './style/style.scss';
 
 import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
-import { outputProgress, outputCode, outputFail } from './misc/result';
+import { outputProgress, clearResult, outputCode, outputFail } from './misc/result';
+import calcEanCheckDigit from './misc/calcEanCheckDigit';
 
 const CANVAS_UNAVAILABLE = 'Cannot use canvas';
 const CAMERA_UNAVAILABLE = 'Cannot use camera';
@@ -192,14 +193,72 @@ const disableCaptureButton = function() {
   captureBtn.classList.add('disabled');
 }
 
+const registerNumberInput = function() {
+  const length13 = document.querySelector('main > .input-number > .length-13');
+  const length8 = document.querySelector('main > .input-number > .length-8');
+
+  if(length13 === null) {
+    throw Error('Element .length-13 is not defined.');
+  }
+  if(length8 === null) {
+    throw Error('Element .length-8 is not defined.');
+  }
+
+  // is the elements ordered?
+  const input13 = Array.from(length13.querySelectorAll('input'));
+  const input8 = Array.from(length8.querySelectorAll('input'));
+
+  if(input13.length !== 13) {
+    throw Error('Element number is wrong in .length-13');
+  }
+  if(input8.length !== 8) {
+    throw Error('Element number is wrong in .length-8');
+  }
+
+  const regisiter = function(arr: HTMLInputElement[]) {
+    for(let i = 0; i < arr.length - 1; i++) {
+      const d = arr[i];
+
+      d.addEventListener('focus', (e) => {
+        // select text
+        const el = <HTMLInputElement>e.target;
+        el.focus();
+        el.select();
+      });
+
+      d.addEventListener('input', (e) => {
+        // focus next input
+        const el = <HTMLInputElement>e.target;
+        el.value = el.value.slice(-1);
+        arr[i + 1].focus();
+
+        if(arr.slice(0, -1).every(v => /[0-9]/.test(v.value))) {
+          // all inputs are filled
+          // complete check digit input and generate jan
+          const code = arr.slice(0, -1).map(v => v.value).join('');
+          const checkDigit = calcEanCheckDigit(code);
+          arr[arr.length - 1].value = '' + checkDigit;
+          outputCode(code + checkDigit);
+        } else {
+          // clear check digit
+          clearResult();
+          arr[arr.length - 1].value = '';
+        }
+      });
+    }
+  }
+
+  regisiter(input13);
+  regisiter(input8);
+}
+
 window.addEventListener('load', async () => {
+  registerModeSwitch();
+  registerFileUpload();
+  registerNumberInput();
+
   try {
-    registerModeSwitch();
-
-    registerFileUpload();
-
     await registerCamera();
-
     registerCaptureButton();
   } catch(err) {
     if(err === CAMERA_UNAVAILABLE) {

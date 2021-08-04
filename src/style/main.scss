@@ -179,6 +179,14 @@ main {
       border: 1px solid $c-separator;
       border-radius: $radius;
 
+      // hide arrows
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      -moz-appearance: textfield;
+
       &:hover {
         background-color: $c-bg-2;
       }

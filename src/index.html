@@ -16,7 +16,7 @@
 <body>
   <header>
     <div class="selectMode">
-      <button class="select-barcode"></button>
+      <button class="select-barcode selected"></button>
       <button class="select-number"></button>
     </div>
   </header>
@@ -24,11 +24,11 @@
   <main>
     <div class="input-barcode selected">
       <!-- video source -->
-      <video id="cameraSrc" style="display: none;"></video>
+      <video id="cameraSrc" autoplay style="display: none;"></video>
 
       <div class="camera">
         <div class="canvasWrapper">
-          <canvas id="cameraPreview" width="640px" height="320px"></canvas>
+          <canvas id="cameraPreview" ></canvas>
         </div>
       </div>
 
@@ -76,8 +76,9 @@
     </div>
 
     <div class="result">
+      <div class="fail"></div>
       <div class="code"></div>
-      <div class="extractJAN"></div>
+      <div class="ean-code"></div>
     </div>
   </main>
 </body>

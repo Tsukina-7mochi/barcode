@@ -171,8 +171,9 @@ const registerCaptureButton = function() {
     }
 
     const url = videoToImageUrl(cameraSrc);
-    console.log(url);
 
+    resultCode.innerHTML = '';
+    resultFail.innerHTML = '';
 
     read(url).then((str) => {
       resultCode.textContent = str;

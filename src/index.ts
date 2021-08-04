@@ -1,7 +1,6 @@
 import './style/style.scss';
 
 import encode from './encoder/encoder';
-import createImage from './createImage';
 import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
 

@@ -133,34 +133,39 @@ main {
   }
 
   > .input-number {
+    margin-top: 1em;
     font-size: 1.5em;
 
-    > .length-13 {
+    > h2 {
+      font-size: 0.8em;
+      text-align: center;
+      font-weight: normal;
+      padding: 0;
+      margin: 0;
+    }
+
+    > .length-13, .length-8 {
       margin: 0.5em 0;
       padding: 0 0.5em;
       height: 2em;
 
        > .wrapper {
           height: 100%;
+          margin: 0 auto;
           display: grid;
-          grid-template-columns: repeat(13, 1fr);
           grid-template-rows: 1fr;
           gap: 0.1em;
        }
     }
 
-    > .length-8 {
-      margin: 0.5em 0;
-      padding: 0 0.5em;
-      height: 2em;
+    > .length-13 > .wrapper {
+      grid-template-columns: repeat(13, 1fr);
+      max-width: 1.6em * 13 - 0.1em;
+    }
 
-       > .wrapper {
-          height: 100%;
-          display: grid;
-          grid-template-columns: repeat(8, 1fr);
-          grid-template-rows: 1fr;
-          gap: 0.1em;
-       }
+    > .length-8 > .wrapper {
+      grid-template-columns: repeat(8, 1fr);
+      max-width: 1.6em * 8 - 0.1em;
     }
 
     input {

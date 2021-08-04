@@ -71,7 +71,7 @@ const setCode = function(code: string) {
   // extract ean code
   const detectEan = function(from: number, length: number) {
     const part = code.slice(from, from + length);
-    if(calcEanCheckDigit(part) === parseInt(part.slice(-1))) {
+    if(calcEanCheckDigit(part.slice(0, -1)) === parseInt(part.slice(-1))) {
       addEanCode(part);
     }
   }

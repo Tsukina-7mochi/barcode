@@ -1,8 +1,12 @@
+import calcEanCheckDigit from './calcEanCheckDigit';
+import encode from '../encoder/encoder';
+import createImage from './createImage';
+
 const getResultElement = function() {
-  const resultMessage = document.querySelector('main .result .message')
+  const resultMessage = document.querySelector('main .result .message');
   const resultFail = document.querySelector('main .result .fail');
   const resultCode = document.querySelector('main .result .code');
-  const resultEanCode = document.querySelector('main .result .ean-code');
+  const resultEanCode = document.querySelector('main .result .ean-code .output');
 
   if(resultMessage === null) {
     throw Error('Element main .result .message is not defined');
@@ -14,7 +18,7 @@ const getResultElement = function() {
     throw Error('Element main .result .code is not defined.');
   }
   if(resultEanCode === null) {
-    throw Error('Element main .result .ean-code is not defined.');
+    throw Error('Element main .result .ean-code .output is not defined.');
   }
 
   return {
@@ -46,14 +50,50 @@ const setFail = function(message: string) {
   resultFail.innerHTML = message;
 }
 
+const addEanCode = function(code: string) {
+  const { resultEanCode } = getResultElement();
+  const img = createImage(encode(code, 'JAN'));
+
+  const wrapper = document.createElement('div');
+  const codeStrDiv = document.createElement('div');
+  codeStrDiv.textContent = code;
+
+  wrapper.appendChild(img);
+  wrapper.appendChild(codeStrDiv);
+  resultEanCode.appendChild(wrapper);
+}
+
 const setCode = function(code: string) {
   const { resultCode } = getResultElement();
 
   resultCode.innerHTML = code;
+
+  // extract ean code
+  const detectEan = function(from: number, length: number) {
+    const part = code.slice(from, from + length);
+    if(calcEanCheckDigit(part) === parseInt(part.slice(-1))) {
+      addEanCode(part);
+    }
+  }
+  for(let i = 0; i <= code.length - 13; i++) {
+    detectEan(i, 13);
+  }
+  for(let i = 0; i <= code.length - 8; i++) {
+    detectEan(i, 8);
+  }
+}
+
+const outputProgress = function(progress: 'reading') {
+  clearResult();
+
+  if(progress === 'reading') {
+    setMessage('読み取り中...');
+  }
 }
 
 const outputCode = function(code: string) {
   clearResult();
+
   setMessage('読み取り成功！');
   setCode(code);
 }
@@ -87,6 +127,7 @@ const outputFail = function(reason: 'readerFailed' | 'cameraUnavailable' | 'canv
 }
 
 export {
+  outputProgress,
   clearResult,
   outputCode,
   outputFail

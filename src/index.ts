@@ -2,7 +2,7 @@ import './style/style.scss';
 
 import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
-import { clearResult, outputCode, outputFail } from './misc/result';
+import { outputProgress, clearResult, outputCode, outputFail } from './misc/result';
 
 const CANVAS_UNAVAILABLE = 'Cannot use canvas';
 const CAMERA_UNAVAILABLE = 'Cannot use camera';
@@ -41,6 +41,16 @@ const registerModeSwitch = function() {
   });
 }
 
+const readUrl = function(url: string) {
+  outputProgress('reading');
+
+  return read(url).then((str) => {
+    outputCode(str);
+  }).catch((err) => {
+    outputFail('readerFailed');
+  });
+}
+
 const registerFileUpload = function() {
   const uploadFile = document.querySelector('main > .input-barcode > .uploadFile');
   if(uploadFile === null) {
@@ -63,14 +73,7 @@ const registerFileUpload = function() {
     reader.onload = () => {
       // result must be string using FileReader.readAsDataURL
       const url = <string> reader.result;
-
-      clearResult();
-
-      read(url).then((str) => {
-        outputCode(str);
-      }).catch((err) => {
-        outputFail('readerFailed');
-      });
+      readUrl(url);
     }
 
     reader.readAsDataURL(file);
@@ -175,14 +178,7 @@ const registerCaptureButton = function() {
     }
 
     const url = videoToImageUrl(cameraSrc);
-
-    clearResult();
-
-    read(url).then((str) => {
-      outputCode(str);
-    }).catch((err) => {
-      outputFail('readerFailed');
-    });
+    readUrl(url);
   });
 }
 

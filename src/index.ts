@@ -1,8 +1,8 @@
 import './style/style.scss';
 
-import encode from './encoder/encoder';
 import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
+import { clearResult, outputCode, outputFail } from './misc/result';
 
 const CANVAS_UNAVAILABLE = 'Cannot use canvas';
 const CAMERA_UNAVAILABLE = 'Cannot use camera';
@@ -171,20 +171,12 @@ const registerCaptureButton = function() {
 
     const url = videoToImageUrl(cameraSrc);
 
-    resultCode.innerHTML = '';
-    resultFail.innerHTML = '';
+    clearResult();
 
     read(url).then((str) => {
-      resultCode.textContent = str;
+      outputCode(str);
     }).catch((err) => {
-      resultFail.innerHTML = `
-        <h2>読み取りできませんでした...</h2>
-        <p>
-          大きさ・角度・位置などを調整してもう一度撮ってみてください！<br>
-          曲がった面での読み取りは難しいです。<br>
-          どうしてもだめな場合は直接入力してください！
-        </p>
-      `;
+      outputFail('readerFailed');
     });
   });
 }
@@ -211,9 +203,11 @@ window.addEventListener('load', async () => {
   } catch(err) {
     if(err === CAMERA_UNAVAILABLE) {
       console.log(err);
+      outputFail('cameraUnavailable');
       disableCaptureButton();
     } else if(err === CANVAS_UNAVAILABLE) {
       console.log(err);
+      outputFail('canvasUnavailable');
       disableCaptureButton();
     } else {
       throw err;

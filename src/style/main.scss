@@ -9,7 +9,12 @@ main {
     }
   }
 
-  >.input-barcode {
+  > .result {
+    display: block;
+    text-align: center;
+  }
+
+  > .input-barcode {
     video: {
       display: none;
     }

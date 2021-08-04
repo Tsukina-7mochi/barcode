@@ -9,11 +9,6 @@ main {
     }
   }
 
-  > .result {
-    display: block;
-    text-align: center;
-  }
-
   > .input-barcode {
     video: {
       display: none;
@@ -176,7 +171,7 @@ main {
       height: 100%;
       font-size: 1em;
       color: $c-text;
-      border: 1px solid $c-text;
+      border: 1px solid $c-separator;
       border-radius: $radius;
 
       &:hover {
@@ -186,6 +181,28 @@ main {
       &:last-child {
         background-color: $c-bg-3;
       }
+    }
+  }
+
+  > .result {
+    display: block;
+    text-align: center;
+    max-width: 640px;
+    margin: 0.5em auto 0;
+    line-height: 1.5em;
+    border: 1px solid $c-separator;
+
+    .message {
+      font-size: 1.5em;
+      padding: 0.5em;
+      min-height: 1em;
+      background-color: $c-main;
+      color: $c-main-text;
+    }
+
+    .detail {
+      min-height: 1em;
+      padding: 0.5em;
     }
   }
 }

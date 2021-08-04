@@ -64,8 +64,13 @@ const registerFileUpload = function() {
       // result must be string using FileReader.readAsDataURL
       const url = <string> reader.result;
 
-      console.log(url);
-      console.log('result: ' + read(url));
+      clearResult();
+
+      read(url).then((str) => {
+        outputCode(str);
+      }).catch((err) => {
+        outputFail('readerFailed');
+      });
     }
 
     reader.readAsDataURL(file);

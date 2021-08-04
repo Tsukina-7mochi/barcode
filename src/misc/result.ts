@@ -52,15 +52,19 @@ const setFail = function(message: string) {
 
 const addEanCode = function(code: string) {
   const { resultEanCode } = getResultElement();
-  const img = createImage(encode(code, 'JAN'));
+  try {
+    const img = createImage(encode(code, 'JAN'));
 
-  const wrapper = document.createElement('div');
-  const codeStrDiv = document.createElement('div');
-  codeStrDiv.textContent = code;
+    const wrapper = document.createElement('div');
+    const codeStrDiv = document.createElement('div');
+    codeStrDiv.textContent = code;
 
-  wrapper.appendChild(img);
-  wrapper.appendChild(codeStrDiv);
-  resultEanCode.appendChild(wrapper);
+    wrapper.appendChild(img);
+    wrapper.appendChild(codeStrDiv);
+    resultEanCode.appendChild(wrapper);
+  } catch(err) {
+    console.error(err);
+  }
 }
 
 const setCode = function(code: string) {

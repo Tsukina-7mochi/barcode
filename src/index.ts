@@ -2,7 +2,7 @@ import './style/style.scss';
 
 import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
-import { outputProgress, clearResult, outputCode, outputFail } from './misc/result';
+import { outputProgress, outputCode, outputFail } from './misc/result';
 
 const CANVAS_UNAVAILABLE = 'Cannot use canvas';
 const CAMERA_UNAVAILABLE = 'Cannot use camera';

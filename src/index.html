@@ -15,21 +15,25 @@
 </head>
 <body>
   <header>
-    <div id="selectMode">
-      <button id="select-barcode"></button>
-      <button id="select-number"></button>
+    <div class="selectMode">
+      <button class="select-barcode"></button>
+      <button class="select-number"></button>
     </div>
   </header>
 
   <main>
-    <div id="input-barcode">
+    <div class="input-barcode selected">
       <!-- video source -->
-      <video id="cameraSrc" autoplay="true" style="display: none;"></video>
+      <video id="cameraSrc" style="display: none;"></video>
 
-      <canvas id="cameraPreview"></canvas>
+      <div class="camera">
+        <div class="canvasWrapper">
+          <canvas id="cameraPreview" width="640px" height="320px"></canvas>
+        </div>
+      </div>
 
       <div class="uploadFile">
-        <a>Upload image instead of camera</a>
+        <button class="upload-text">Upload Image</button>
         <input type="file">
       </div>
 
@@ -38,33 +42,42 @@
       </div>
     </div>
 
-    <div id="input-number">
+    <div class="input-number">
       <div class="length-13">
-        <input type="number" class="digit0" min="0" max="9" setp="1">
-        <input type="number" class="digit1" min="0" max="9" setp="1">
-        <input type="number" class="digit2" min="0" max="9" setp="1">
-        <input type="number" class="digit3" min="0" max="9" setp="1">
-        <input type="number" class="digit4" min="0" max="9" setp="1">
-        <input type="number" class="digit5" min="0" max="9" setp="1">
-        <input type="number" class="digit6" min="0" max="9" setp="1">
-        <input type="number" class="digit7" min="0" max="9" setp="1">
-        <input type="number" class="digit8" min="0" max="9" setp="1">
-        <input type="number" class="digit9" min="0" max="9" setp="1">
-        <input type="number" class="digit10" min="0" max="9" setp="1">
-        <input type="number" class="digit11" min="0" max="9" setp="1">
-        <input type="number" class="digit12" min="0" max="9" setp="1" readonly>
+        <div class="wrapper">
+          <input type="number" class="digit0" min="0" max="9" setp="1">
+          <input type="number" class="digit1" min="0" max="9" setp="1">
+          <input type="number" class="digit2" min="0" max="9" setp="1">
+          <input type="number" class="digit3" min="0" max="9" setp="1">
+          <input type="number" class="digit4" min="0" max="9" setp="1">
+          <input type="number" class="digit5" min="0" max="9" setp="1">
+          <input type="number" class="digit6" min="0" max="9" setp="1">
+          <input type="number" class="digit7" min="0" max="9" setp="1">
+          <input type="number" class="digit8" min="0" max="9" setp="1">
+          <input type="number" class="digit9" min="0" max="9" setp="1">
+          <input type="number" class="digit10" min="0" max="9" setp="1">
+          <input type="number" class="digit11" min="0" max="9" setp="1">
+          <input type="number" class="digit12" min="0" max="9" setp="1" readonly>
+        </div>
       </div>
 
       <div class="length-8">
-        <input type="number" class="digit0" min="0" max="9" setp="1">
-        <input type="number" class="digit1" min="0" max="9" setp="1">
-        <input type="number" class="digit2" min="0" max="9" setp="1">
-        <input type="number" class="digit3" min="0" max="9" setp="1">
-        <input type="number" class="digit4" min="0" max="9" setp="1">
-        <input type="number" class="digit5" min="0" max="9" setp="1">
-        <input type="number" class="digit6" min="0" max="9" setp="1">
-        <input type="number" class="digit7" min="0" max="9" setp="1" readonly>
+        <div class="wrapper">
+          <input type="number" class="digit0" min="0" max="9" setp="1">
+          <input type="number" class="digit1" min="0" max="9" setp="1">
+          <input type="number" class="digit2" min="0" max="9" setp="1">
+          <input type="number" class="digit3" min="0" max="9" setp="1">
+          <input type="number" class="digit4" min="0" max="9" setp="1">
+          <input type="number" class="digit5" min="0" max="9" setp="1">
+          <input type="number" class="digit6" min="0" max="9" setp="1">
+          <input type="number" class="digit7" min="0" max="9" setp="1" readonly>
+        </div>
       </div>
+    </div>
+
+    <div class="result">
+      <div class="code"></div>
+      <div class="extractJAN"></div>
     </div>
   </main>
 </body>

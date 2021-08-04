@@ -9,17 +9,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png)$/,
+        test: /\.(png|svg)$/,
         loader: 'url-loader',
       },
       {
         test: /\.scss$/,
         use: [
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               url: true,
               sourceMap: true,
+              importLoaders: 2
             },
           },
           {

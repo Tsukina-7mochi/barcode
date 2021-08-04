@@ -1,4 +1,4 @@
-import './style/main.scss';
+import './style/style.scss';
 
 import encode from './encoder/encoder';
 import createImage from './createImage';
@@ -48,6 +48,8 @@ window.addEventListener('load', () => {
 
     reader.readAsDataURL(file);
   });
+
+  return;
 
   // camera capture
   const width = 640;

@@ -4,7 +4,7 @@ import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
 import { outputProgress, clearResult, outputCode, outputFail } from './misc/result';
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
-import setFocusMode from './misc/setFocusMode';
+import { addCameraConstraints, switchFacingMode } from './resources/addCameraConstraints';
 
 const CANVAS_UNAVAILABLE = 'Cannot use canvas';
 const CAMERA_UNAVAILABLE = 'Cannot use camera';
@@ -54,7 +54,7 @@ const readUrl = function(url: string) {
 }
 
 const registerFileUpload = function() {
-  const uploadFile = document.querySelector('main > .input-barcode > .uploadFile');
+  const uploadFile = document.querySelector('main > .input-barcode .uploadFile');
   if(uploadFile === null) {
     throw Error('Element .uploadFile is not defined');
   }
@@ -87,6 +87,23 @@ const registerFileUpload = function() {
   });
 }
 
+const registerCameraSwitch = function() {
+  const button = document.querySelector('main > .input-barcode .switchCamera button');
+  const cameraSrc = <HTMLVideoElement> document.getElementById('cameraSrc');
+
+  if(cameraSrc === null) {
+    throw Error('Element #cameraScr is not defined');
+  }
+
+  if(button === null) {
+    throw Error('Element .input-barcode .switchCamera button is not defined');
+  }
+
+  button.addEventListener('click', () => {
+    switchFacingMode(<MediaStream> cameraSrc.srcObject);
+  });
+}
+
 const registerCamera = function() {
   const width = 640;
   const height = 320;
@@ -101,10 +118,9 @@ const registerCamera = function() {
     audio: false,
     video: {
       width: Math.max(width, height),
-      height: Math.max(width, height),
-      facingMode: { exact: 'environment' }
+      height: Math.max(width, height)
     }
-  }).catch(() => {
+  }).catch((err) => {
     throw CAMERA_UNAVAILABLE;
   }).then((stream) => {
     cameraSrc.srcObject = stream;
@@ -140,7 +156,10 @@ const registerCamera = function() {
       cameraPreviewCtx.fillStyle = '#FFFFFF';
       cameraPreviewCtx.strokeStyle = '#FFFFFF';
       cameraPreviewCtx.lineWidth = 1;
-      setFocusMode(stream);
+
+      setTimeout(() => {
+        addCameraConstraints(stream);
+      }, 1000);
 
       const drawToCanvas = function() {
 
@@ -268,6 +287,7 @@ const registerNumberInput = function() {
 window.addEventListener('load', async () => {
   registerModeSwitch();
   registerFileUpload();
+  registerCameraSwitch();
   registerNumberInput();
 
   try {

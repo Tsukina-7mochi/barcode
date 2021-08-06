@@ -215,14 +215,19 @@ const registerCaptureButton = function() {
   });
 }
 
-const disableCaptureButton = function() {
+const disableCameraButton = function() {
   const captureBtn = document.querySelector('main .capture button');
+  const cameraSwitchButton = document.querySelector('main .switchCamera button');
 
   if(captureBtn === null) {
     throw Error('Element main .capture button is not defined');
   }
+  if(cameraSwitchButton === null) {
+    throw Error('Element main .switchCamera button is not defined');
+  }
 
   captureBtn.classList.add('disabled');
+  cameraSwitchButton.classList.add('disabled');
 }
 
 const registerNumberInput = function() {
@@ -297,11 +302,11 @@ window.addEventListener('load', async () => {
     if(err === CAMERA_UNAVAILABLE) {
       console.log(err);
       outputFail('cameraUnavailable');
-      disableCaptureButton();
+      disableCameraButton();
     } else if(err === CANVAS_UNAVAILABLE) {
       console.log(err);
       outputFail('canvasUnavailable');
-      disableCaptureButton();
+      disableCameraButton();
     } else {
       throw err;
     }

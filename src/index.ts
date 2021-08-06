@@ -4,7 +4,7 @@ import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
 import { outputProgress, clearResult, outputCode, outputFail } from './misc/result';
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
-import { addCameraConstraints, switchFacingMode } from './resources/addCameraConstraints';
+import { addCameraConstraints, switchFacingMode } from './misc/addCameraConstraints';
 
 const CANVAS_UNAVAILABLE = 'Cannot use canvas';
 const CAMERA_UNAVAILABLE = 'Cannot use camera';

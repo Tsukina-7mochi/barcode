@@ -1,4 +1,4 @@
-import setFocusMode from "../misc/setFocusMode";
+import setFocusMode from "./setFocusMode";
 
 const setFacingMode = function(track: MediaStreamTrack, mode: 'environment' | 'user') {
   console.log(`switch to ${mode}`);

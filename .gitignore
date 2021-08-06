@@ -1,6 +1,9 @@
 # Outputs
 /dest/
 
+# Firebase
+/.firebase/
+
 # Test Files
 /test/
 

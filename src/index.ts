@@ -4,6 +4,7 @@ import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
 import { outputProgress, clearResult, outputCode, outputFail } from './misc/result';
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
+import setFocusMode from './misc/setFocusMode';
 
 const CANVAS_UNAVAILABLE = 'Cannot use canvas';
 const CAMERA_UNAVAILABLE = 'Cannot use camera';
@@ -89,12 +90,6 @@ const registerFileUpload = function() {
 const registerCamera = function() {
   const width = 640;
   const height = 320;
-  const guideRect = {
-    x: 80,
-    y: 100,
-    width: 480,
-    height: 120
-  }
 
   const cameraSrc = <HTMLVideoElement> document.getElementById('cameraSrc');
 
@@ -105,8 +100,8 @@ const registerCamera = function() {
   return navigator.mediaDevices.getUserMedia({
     audio: false,
     video: {
-      width: { ideal: width },
-      height: { ideal: height }
+      width: Math.max(width, height),
+      height: Math.max(width, height)
     }
   }).catch(() => {
     throw CAMERA_UNAVAILABLE;
@@ -119,40 +114,57 @@ const registerCamera = function() {
       throw Error('Element #cameraPreview is not defined');
     }
 
-    cameraPreview.setAttribute('width', width + 'px');
-    cameraPreview.setAttribute('height', height + 'px');
-    const cameraPreviewCtx = cameraPreview.getContext('2d');
+    setTimeout(() => {
+      const aspectRatio = height / width;
+      const realWidth = cameraSrc.videoWidth;
+      const realHeight = cameraSrc.videoHeight;
+      const canvasWidth = 640;
+      const canvasHeight = canvasWidth * aspectRatio;
 
-    if(cameraPreviewCtx === null) {
-      throw CANVAS_UNAVAILABLE;
-    }
+      const guideRect = {
+        x: canvasWidth / 8,
+        y: (canvasHeight - canvasWidth * 3 / 16) / 2,
+        width: canvasWidth * 3 / 4,
+        height: canvasWidth * 3 / 16
+      }
 
-    cameraPreviewCtx.fillStyle = '#FFFFFF';
-    cameraPreviewCtx.strokeStyle = '#FFFFFF';
-    cameraPreviewCtx.lineWidth = 1;
+      cameraPreview.setAttribute('width', canvasWidth + 'px');
+      cameraPreview.setAttribute('height', canvasHeight + 'px');
+      const cameraPreviewCtx = cameraPreview.getContext('2d');
 
-    const drawToCanvas = function() {
-      cameraPreviewCtx.save();
+      if(cameraPreviewCtx === null) {
+        throw CANVAS_UNAVAILABLE;
+      }
 
-      cameraPreviewCtx.clearRect(0, 0, width, height);
+      cameraPreviewCtx.fillStyle = '#FFFFFF';
+      cameraPreviewCtx.strokeStyle = '#FFFFFF';
+      cameraPreviewCtx.lineWidth = 1;
+      setFocusMode(stream);
 
-      cameraPreviewCtx.globalAlpha = 0.2;
-      cameraPreviewCtx.fillRect(0, 0, width, height);
-      cameraPreviewCtx.globalAlpha = 1;
+      const drawToCanvas = function() {
 
-      cameraPreviewCtx.clearRect(guideRect.x, guideRect.y, guideRect.width, guideRect.height);
-      cameraPreviewCtx.strokeRect(guideRect.x, guideRect.y, guideRect.width, guideRect.height);
+        cameraPreviewCtx.save();
 
-      cameraPreviewCtx.globalCompositeOperation = 'destination-over';
+        cameraPreviewCtx.clearRect(0, 0, width, height);
 
-      cameraPreviewCtx.drawImage(cameraSrc, 0, 0);
+        cameraPreviewCtx.globalAlpha = 0.2;
+        cameraPreviewCtx.fillRect(0, 0, width, height);
+        cameraPreviewCtx.globalAlpha = 1;
 
-      cameraPreviewCtx.restore();
+        cameraPreviewCtx.clearRect(guideRect.x, guideRect.y, guideRect.width, guideRect.height);
+        cameraPreviewCtx.strokeRect(guideRect.x, guideRect.y, guideRect.width, guideRect.height);
+
+        cameraPreviewCtx.globalCompositeOperation = 'destination-over';
+
+        cameraPreviewCtx.drawImage(cameraSrc, (canvasWidth - realWidth) / 2, (canvasHeight - realHeight) / 2, realWidth, realHeight);
+
+        cameraPreviewCtx.restore();
+
+        requestAnimationFrame(drawToCanvas);
+      };
 
       requestAnimationFrame(drawToCanvas);
-    };
-
-    requestAnimationFrame(drawToCanvas);
+    }, 1000);
   });
 }
 

@@ -9,7 +9,7 @@ export default function(video: HTMLVideoElement): string {
 
   if(ctx === null) return '';
 
-  ctx.drawImage(video, 0, 0);
+  ctx.drawImage(video, 0, 0, w, h);
 
   return canvas.toDataURL();
 }

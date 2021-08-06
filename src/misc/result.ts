@@ -108,10 +108,14 @@ const outputFail = function(reason: 'readerFailed' | 'cameraUnavailable' | 'canv
   if(reason === 'readerFailed') {
     setMessage('読み取り失敗...');
     setFail(`
-      <p>
-        大きさ・角度・位置などを調整してもう一度撮ってみてください<br>
-        曲がった面での読み取りは難しいです。どうしてもだめな場合は直接入力してください。
-      </p>
+      <ul>
+        <li>
+          バーコードが画面全体になるように撮影してください。
+        </li>
+        <li>
+          暗い場所・曲がった面などでは検出が難しいです。手動入力をお試しください。
+        </li>
+      </ul>
     `);
   } else if(reason === 'cameraUnavailable') {
     setMessage('カメラを利用できません');

@@ -102,7 +102,7 @@ const registerCamera = function() {
     video: {
       width: Math.max(width, height),
       height: Math.max(width, height),
-      facingMode: { exact: "environment" }
+      facingMode: { exact: 'environment' }
     }
   }).catch(() => {
     throw CAMERA_UNAVAILABLE;

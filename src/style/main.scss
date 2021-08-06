@@ -48,7 +48,16 @@ main {
       }
     }
 
-    > .uploadFile {
+    .wrapper {
+      display: flex;
+
+      > div {
+        flex-grow: 1;
+        margin: 0.1em;
+      }
+    }
+
+    .uploadFile {
       margin-bottom: 0.5em;
       font-size: 1.2em;
 
@@ -87,7 +96,44 @@ main {
       }
     }
 
+    .switchCamera {
+      margin-bottom: 0.5em;
+      font-size: 1.2em;
+
+      button {
+        display: block;
+        width: 100%;
+        height: 1.5em;
+        appearance: none;
+        box-sizing: border-box;
+        border: none;
+        outline: none;
+        border-radius: $radius;
+        background-color: $c-main;
+        color: $c-main-text;
+        text-align: center;
+        font-size: 1em;
+        @include insertImageBefore(1em, 1em, url("../resources/cameraswitch_white_24dp.svg")){
+          transform: translate(0, 15%);
+        };
+
+        &:hover {
+          background-color: $c-main-2;
+        }
+
+        &:active {
+          background-color: $c-main-3;
+        }
+
+        &:focus {
+          outline: 2px solid $c-main-text;
+        }
+      }
+    }
+
     > .capture {
+      margin: 0.1em;
+
       button {
         display: block;
         width: 100%;

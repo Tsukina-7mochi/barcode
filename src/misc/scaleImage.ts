@@ -17,7 +17,7 @@ const scaleImage = function(imgUrl: string, length: number): Promise<string> {
         height = Math.floor(length);
       }
       canvas.setAttribute('width', width + 'px');
-      canvas.setAttribute('heihgt', height + 'px');
+      canvas.setAttribute('height', height + 'px');
 
       console.log(img.naturalWidth, img.naturalHeight);
       console.log(width, height);

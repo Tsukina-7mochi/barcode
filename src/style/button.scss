@@ -1,0 +1,40 @@
+%button {
+  display: block;
+  width: 100%;
+  min-height: 1.5em;
+  appearance: none;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  border-radius: $radius;
+  background-color: $c-main;
+  color: $c-main-text;
+  text-align: center;
+  font-size: 1em;
+
+  &:hover {
+    background-color: $c-main-2;
+  }
+
+  &:active {
+    background-color: $c-main-3;
+  }
+
+  &:focus {
+    outline: 2px solid $c-main-text;
+  }
+}
+
+@mixin disabledButtonFeature {
+  &.disabled {
+    background-color: $c-bg-3;
+
+    &:hover {
+      background-color: $c-bg-3;
+    }
+
+    &:active {
+      background-color: $c-bg-3;
+    }
+  }
+}

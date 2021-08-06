@@ -25,20 +25,31 @@ export function addCameraConstraints(stream: MediaStream) {
   setFocusMode(stream);
 }
 
+let facingModeFlag = false;
 export function switchFacingMode(stream: MediaStream) {
   const track = stream.getVideoTracks()[0];
   const capabilities = track.getCapabilities();
 
   if(capabilities.facingMode) {
-    const constraints = track.getConstraints();
-    if(constraints.facingMode) {
-      if(constraints.facingMode === 'environment') {
-        setFacingMode(track, 'environment');
-      } else {
-        setFacingMode(track, 'user');
-      }
-    } else {
+    // Use facing mode flag instead of detecting current facing mode
+    // To explicitly switch between environment and user
+
+    // const constraints = track.getConstraints();
+    // if(constraints.facingMode) {
+    //   if(constraints.facingMode === 'environment') {
+    //     setFacingMode(track, 'environment');
+    //   } else {
+    //     setFacingMode(track, 'user');
+    //   }
+    // } else {
+    //   setFacingMode(track, 'environment');
+    // }
+
+    if(facingModeFlag) {
       setFacingMode(track, 'environment');
+    } else {
+      setFacingMode(track, 'user');
     }
+    facingModeFlag = !facingModeFlag;
   }
 }

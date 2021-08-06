@@ -7,6 +7,7 @@ const getResultElement = function() {
   const resultFail = document.querySelector('main .result .fail');
   const resultCode = document.querySelector('main .result .code');
   const resultEanCode = document.querySelector('main .result .ean-code .output');
+  const resultEanCodeWrapper = document.querySelector('main .result .ean-code');
 
   if(resultMessage === null) {
     throw Error('Element main .result .message is not defined');
@@ -20,12 +21,59 @@ const getResultElement = function() {
   if(resultEanCode === null) {
     throw Error('Element main .result .ean-code .output is not defined.');
   }
+  if(resultEanCodeWrapper === null) {
+    throw Error('Element main .result .ean-code is not defined.');
+  }
 
   return {
     resultMessage,
     resultFail,
     resultCode,
-    resultEanCode
+    resultEanCode,
+    resultEanCodeWrapper
+  }
+}
+
+interface setVisibilityOption {
+  message?: boolean,
+  fail?: boolean,
+  code?: boolean,
+  eanCode?: boolean
+}
+const setVisibility = function(option: setVisibilityOption) {
+  const hideClassName = 'hidden';
+  const { resultMessage, resultFail, resultCode, resultEanCodeWrapper } = getResultElement();
+
+  if(Object.prototype.hasOwnProperty.call(option, 'message')) {
+    if(option.message) {
+      resultMessage.classList.remove(hideClassName);
+    } else {
+      resultMessage.classList.add(hideClassName);
+    }
+  }
+
+  if(Object.prototype.hasOwnProperty.call(option, 'fail')) {
+    if(option.fail) {
+      resultFail.classList.remove(hideClassName);
+    } else {
+      resultFail.classList.add(hideClassName);
+    }
+  }
+
+  if(Object.prototype.hasOwnProperty.call(option, 'code')) {
+    if(option.code) {
+      resultCode.classList.remove(hideClassName);
+    } else {
+      resultCode.classList.add(hideClassName);
+    }
+  }
+
+  if(Object.prototype.hasOwnProperty.call(option, 'eanCode')) {
+    if(option.eanCode) {
+      resultEanCodeWrapper.classList.remove(hideClassName);
+    } else {
+      resultEanCodeWrapper.classList.add(hideClassName);
+    }
   }
 }
 
@@ -36,18 +84,33 @@ const clearResult = function() {
   resultFail.innerHTML = '';
   resultCode.innerHTML = '';
   resultEanCode.innerHTML = '';
+
+  setVisibility({
+    message: false,
+    fail: false,
+    code: false,
+    eanCode: false
+  });
 }
 
 const setMessage = function(message: string) {
   const { resultMessage } = getResultElement();
 
   resultMessage.innerHTML = message;
+
+  setVisibility({
+    message: true
+  });
 }
 
 const setFail = function(message: string) {
   const { resultFail } = getResultElement();
 
   resultFail.innerHTML = message;
+
+  setVisibility({
+    fail: true
+  });
 }
 
 const addEanCode = function(code: string) {
@@ -67,23 +130,33 @@ const addEanCode = function(code: string) {
   }
 }
 
-const setCode = function(code: string) {
+const setCode = function(code: string, detectEan: boolean) {
   const { resultCode } = getResultElement();
 
   resultCode.innerHTML = code;
 
-  // extract ean code
-  const detectEan = function(from: number, length: number) {
+  setVisibility({
+    code: true
+  });
+
+  if(detectEan) {
+    // extract ean code
+    const detect = function(from: number, length: number) {
     const part = code.slice(from, from + length);
-    if(calcEanCheckDigit(part.slice(0, -1)) === parseInt(part.slice(-1))) {
-      addEanCode(part);
+      if(calcEanCheckDigit(part.slice(0, -1)) === parseInt(part.slice(-1))) {
+        addEanCode(part);
+      }
     }
-  }
-  for(let i = 0; i <= code.length - 13; i++) {
-    detectEan(i, 13);
-  }
-  for(let i = 0; i <= code.length - 8; i++) {
-    detectEan(i, 8);
+    for(let i = 0; i <= code.length - 13; i++) {
+      detect(i, 13);
+    }
+    for(let i = 0; i <= code.length - 8; i++) {
+      detect(i, 8);
+    }
+
+    setVisibility({
+      eanCode: true
+    });
   }
 }
 
@@ -99,7 +172,14 @@ const outputCode = function(code: string) {
   clearResult();
 
   setMessage('読み取り成功！');
-  setCode(code);
+  setCode(code, true);
+}
+
+const manualOutputCode = function(code: string) {
+  clearResult();
+
+  setMessage('生成結果');
+  setCode(code, false);
 }
 
 const outputFail = function(reason: 'readerFailed' | 'cameraUnavailable' | 'canvasUnavailable') {
@@ -138,5 +218,6 @@ export {
   outputProgress,
   clearResult,
   outputCode,
-  outputFail
+  outputFail,
+  manualOutputCode
 }

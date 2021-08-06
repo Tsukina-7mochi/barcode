@@ -2,7 +2,7 @@ import './style/style.scss';
 
 import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
-import { outputProgress, clearResult, outputCode, outputFail } from './misc/result';
+import { outputProgress, clearResult, outputCode, outputFail, manualOutputCode } from './misc/result';
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
 import { addCameraConstraints, switchFacingMode } from './misc/addCameraConstraints';
 import scaleImage from './misc/scaleImage';
@@ -279,7 +279,7 @@ const registerNumberInput = function() {
           const code = arr.slice(0, -1).map(v => v.value).join('');
           const checkDigit = calcEanCheckDigit(code);
           arr[arr.length - 1].value = '' + checkDigit;
-          outputCode(code + checkDigit);
+          manualOutputCode(code + checkDigit);
         } else {
           // clear check digit
           clearResult();

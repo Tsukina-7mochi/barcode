@@ -5,6 +5,7 @@ import videoToImageUrl from './misc/vidoToImageUrl';
 import { outputProgress, clearResult, outputCode, outputFail } from './misc/result';
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
 import { addCameraConstraints, switchFacingMode } from './misc/addCameraConstraints';
+import scaleImage from './misc/scaleImage';
 
 const CANVAS_UNAVAILABLE = 'Cannot use canvas';
 const CAMERA_UNAVAILABLE = 'Cannot use camera';
@@ -72,10 +73,13 @@ const registerFileUpload = function() {
     const file: File = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = () => {
+    reader.onload = async () => {
       // result must be string using FileReader.readAsDataURL
       const url = <string> reader.result;
-      readUrl(url);
+      const scaledImgUrl = await scaleImage(url, 600);
+      console.log(scaledImgUrl);
+
+      readUrl(scaledImgUrl);
     }
 
     reader.readAsDataURL(file);

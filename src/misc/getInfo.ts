@@ -1,3 +1,4 @@
+import Camera from "./camera";
 import { getConstraints } from "./getAdditionalInfo";
 
 const getCamera = function(): Promise<[string, MediaStream | null]> {
@@ -56,6 +57,9 @@ const getInfo = async function() {
   const constraints2 = getConstraints();
   const [ cameraState, stream ] = await getCamera();
 
+  console.log(stream?.getVideoTracks());
+
+
   return {
     appName: navigator.appCodeName,
     appVersion: navigator.appVersion,
@@ -63,7 +67,8 @@ const getInfo = async function() {
     platform: navigator.platform,
     canvas: _S(document.createElement('canvas').getContext('2d') !== null),
     cameraState: cameraState,
-    devices: (await navigator.mediaDevices.enumerateDevices()).map(v => v.toString()).join(', '),
+    devices: (await navigator.mediaDevices.enumerateDevices()).map(v => `${v.label} (${v.deviceId}: ${v.kind})`).join(', '),
+    tracks: (stream ? stream.getVideoTracks().map(v => `${v.id}[${v.enabled ? 'Enabled' : 'Disabled'}]`).join(', ') : ''),
     facingMode: _S(constraints.facingMode),
     facingModeEnv: _SV(stream ? await facingMode(stream, 'environment', false) : false),
     facingModeEnvExact: _SV(stream ? await facingMode(stream, 'environment', true) : false),
@@ -90,6 +95,7 @@ const getStringInfo = async function(): Promise<string> {
   add(`canvas: ${info.canvas}`);
   add(`cameraState: ${info.cameraState}`);
   add(`devices: ${info.devices}`);
+  add(`tracks: ${info.tracks}`);
   add(`facingMode: ${info.facingMode}`);
   add(`facingModeEnv: ${info.facingModeEnv}`);
   add(`facingModeEnvExact: ${info.facingModeEnvExact}`);
@@ -102,7 +108,21 @@ const getStringInfo = async function(): Promise<string> {
   return str;
 }
 
+const getStringCameraInfo = function(camera: Camera) {
+  let str = '';
+  const add = function(s: string) {
+    str += s + '\n';
+  }
+
+  add(`devices: ${camera.deviceIdList.join(', ')}`);
+  add(`current device: ${camera.currendDeviceIndex}`);
+  add(`facing mode: ${camera.currentFacingMode}`);
+
+  return str;
+}
+
 export {
   getInfo,
-  getStringInfo
+  getStringInfo,
+  getStringCameraInfo
 };

@@ -207,8 +207,8 @@ main {
 
       width: auto;
 
-      @include insertImageBefore(0.8em, 0.8em, url("../resources/info_white_24dp.svg")) {
-        transform: translate(-5%, 5%);
+      @include insertImageBefore(1em, 1em, url("../resources/info_white_24dp.svg")) {
+        transform: translate(0, 10%);
       }
     }
 

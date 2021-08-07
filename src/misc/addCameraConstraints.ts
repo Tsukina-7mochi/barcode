@@ -26,7 +26,7 @@ export function addCameraConstraints(stream: MediaStream) {
 }
 
 let facingModeFlag = false;
-export function switchFacingMode(stream: MediaStream) {
+export function switchFacingMode(stream: MediaStream): boolean {
   const track = stream.getVideoTracks()[0];
   const capabilities = track.getCapabilities();
 
@@ -52,4 +52,6 @@ export function switchFacingMode(stream: MediaStream) {
     }
     facingModeFlag = !facingModeFlag;
   }
+
+  return facingModeFlag;
 }

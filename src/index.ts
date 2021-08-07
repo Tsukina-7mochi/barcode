@@ -4,12 +4,10 @@ import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
 import { outputProgress, clearResult, outputCode, outputFail, manualOutputCode } from './misc/result';
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
-import { addCameraConstraints, switchFacingMode } from './misc/addCameraConstraints';
 import scaleImage from './misc/scaleImage';
-import { getStringInfo } from './misc/getInfo';
-
-const CANVAS_UNAVAILABLE = 'Cannot use canvas';
-const CAMERA_UNAVAILABLE = 'Cannot use camera';
+import { getStringInfo, getStringCameraInfo } from './misc/getInfo';
+import { CAMERA_UNAVAILABLE, CANVAS_UNAVAILABLE, CAMERA_DISCONNECTED } from './misc/const';
+import Camera from './misc/camera';
 
 const registerModeSwitch = function() {
   const selectBarcode = document.querySelector('header >  .selectMode >  .select-barcode');
@@ -92,7 +90,7 @@ const registerFileUpload = function() {
   });
 }
 
-const registerCameraSwitch = function() {
+const registerCameraSwitch = function(camera: Camera) {
   const button = document.querySelector('main > .input-barcode .switchCamera button');
   const cameraSrc = <HTMLVideoElement> document.getElementById('cameraSrc');
 
@@ -104,8 +102,28 @@ const registerCameraSwitch = function() {
     throw Error('Element .input-barcode .switchCamera button is not defined');
   }
 
-  button.addEventListener('click', () => {
-    switchFacingMode(<MediaStream> cameraSrc.srcObject);
+  button.addEventListener('click', async () => {
+    const originalDeviceIndex = camera.currendDeviceIndex;
+    const originalFacingMode = camera.currentFacingMode;
+    let flag = true;
+
+    while(flag) {
+      try {
+        const mode = await camera.swtichFacingMode();
+        if(mode === 'environment') {
+          await camera.switchDevice();
+        }
+        flag = false;
+      } catch (err) {
+        // do nothing
+      }
+
+      if(camera.currendDeviceIndex === originalDeviceIndex && camera.currentFacingMode === originalFacingMode) {
+        break;
+      }
+    }
+
+    console.log(camera.deviceIdList, camera.currendDeviceIndex, camera.currentFacingMode);
   });
 }
 
@@ -114,82 +132,21 @@ const registerCamera = function() {
   const height = 320;
 
   const cameraSrc = <HTMLVideoElement> document.getElementById('cameraSrc');
-
   if(cameraSrc === null) {
     throw Error('Element #cameraScr is not defined');
   }
 
-  return navigator.mediaDevices.getUserMedia({
-    audio: false,
-    video: {
-      width: Math.max(width, height),
-      height: Math.max(width, height)
-    }
-  }).catch((err) => {
-    throw CAMERA_UNAVAILABLE;
-  }).then((stream) => {
-    cameraSrc.srcObject = stream;
+  const cameraPreview = <HTMLCanvasElement> document.getElementById('cameraPreview');
+  if(cameraPreview === null) {
+    throw Error('Element #cameraPreview is not defined');
+  }
 
-    // register canvas
-    const cameraPreview = <HTMLCanvasElement> document.getElementById('cameraPreview');
-    if(cameraPreview === null) {
-      throw Error('Element #cameraPreview is not defined');
-    }
+  const camera = new Camera(width, height, cameraSrc, cameraPreview);
 
-    setTimeout(() => {
-      const aspectRatio = height / width;
-      const realWidth = cameraSrc.videoWidth;
-      const realHeight = cameraSrc.videoHeight;
-      const canvasWidth = 640;
-      const canvasHeight = canvasWidth * aspectRatio;
+  return camera.init().then(() => {
+    camera.registerCanvasUpdate();
 
-      const guideRect = {
-        x: canvasWidth / 8,
-        y: (canvasHeight - canvasWidth * 3 / 16) / 2,
-        width: canvasWidth * 3 / 4,
-        height: canvasWidth * 3 / 16
-      }
-
-      cameraPreview.setAttribute('width', canvasWidth + 'px');
-      cameraPreview.setAttribute('height', canvasHeight + 'px');
-      const cameraPreviewCtx = cameraPreview.getContext('2d');
-
-      if(cameraPreviewCtx === null) {
-        throw CANVAS_UNAVAILABLE;
-      }
-
-      cameraPreviewCtx.fillStyle = '#FFFFFF';
-      cameraPreviewCtx.strokeStyle = '#FFFFFF';
-      cameraPreviewCtx.lineWidth = 1;
-
-      setTimeout(() => {
-        addCameraConstraints(stream);
-      }, 1000);
-
-      const drawToCanvas = function() {
-
-        cameraPreviewCtx.save();
-
-        cameraPreviewCtx.clearRect(0, 0, width, height);
-
-        cameraPreviewCtx.globalAlpha = 0.2;
-        cameraPreviewCtx.fillRect(0, 0, width, height);
-        cameraPreviewCtx.globalAlpha = 1;
-
-        cameraPreviewCtx.clearRect(guideRect.x, guideRect.y, guideRect.width, guideRect.height);
-        cameraPreviewCtx.strokeRect(guideRect.x, guideRect.y, guideRect.width, guideRect.height);
-
-        cameraPreviewCtx.globalCompositeOperation = 'destination-over';
-
-        cameraPreviewCtx.drawImage(cameraSrc, (canvasWidth - realWidth) / 2, (canvasHeight - realHeight) / 2, realWidth, realHeight);
-
-        cameraPreviewCtx.restore();
-
-        requestAnimationFrame(drawToCanvas);
-      };
-
-      requestAnimationFrame(drawToCanvas);
-    }, 1000);
+    return camera;
   });
 }
 
@@ -294,7 +251,7 @@ const registerNumberInput = function() {
   regisiter(input8);
 }
 
-const registerInfo = function() {
+const registerInfo = function(camera: Camera) {
   const button = document.querySelector('main .info button');
   const output = document.querySelector('main .info .output');
 
@@ -309,7 +266,7 @@ const registerInfo = function() {
     output.classList.toggle('hidden');
 
     if(!output.classList.contains('hidden')) {
-      output.innerHTML = (await getStringInfo()).replace(/\r|\n|\r\n/g, '<br>');
+      output.innerHTML = (await getStringInfo() + getStringCameraInfo(camera)).replace(/\r|\n|\r\n/g, '<br>');
     }
   });
 }
@@ -317,13 +274,13 @@ const registerInfo = function() {
 window.addEventListener('load', async () => {
   registerModeSwitch();
   registerFileUpload();
-  registerCameraSwitch();
   registerNumberInput();
-  registerInfo();
 
   try {
-    await registerCamera();
+    const camera = await registerCamera();
+    registerCameraSwitch(camera);
     registerCaptureButton();
+    registerInfo(camera);
   } catch(err) {
     if(err === CAMERA_UNAVAILABLE) {
       console.log(err);

@@ -182,7 +182,7 @@ const manualOutputCode = function(code: string) {
   setCode(code, false);
 }
 
-const outputFail = function(reason: 'readerFailed' | 'cameraUnavailable' | 'canvasUnavailable') {
+const outputFail = function(reason: 'readerFailed' | 'cameraUnavailable' | 'canvasUnavailable' | 'cameraDisconnected') {
   clearResult();
 
   if(reason === 'readerFailed') {
@@ -211,6 +211,8 @@ const outputFail = function(reason: 'readerFailed' | 'cameraUnavailable' | 'canv
         お使いのブラウザは古いかもしれません。
       </p>
     `);
+  } else if(reason === 'cameraDisconnected') {
+    setMessage('カメラが切断されました');
   }
 }
 

@@ -6,6 +6,7 @@ import { outputProgress, clearResult, outputCode, outputFail, manualOutputCode }
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
 import { addCameraConstraints, switchFacingMode } from './misc/addCameraConstraints';
 import scaleImage from './misc/scaleImage';
+import { getStringInfo } from './misc/getInfo';
 
 const CANVAS_UNAVAILABLE = 'Cannot use canvas';
 const CAMERA_UNAVAILABLE = 'Cannot use camera';
@@ -304,8 +305,12 @@ const registerInfo = function() {
     throw Error('Element main .info .output if not defined');
   }
 
-  button.addEventListener('click', () => {
+  button.addEventListener('click', async () => {
     output.classList.toggle('hidden');
+
+    if(!output.classList.contains('hidden')) {
+      output.innerHTML = (await getStringInfo()).replace(/\r|\n|\r\n/g, '<br>');
+    }
   });
 }
 

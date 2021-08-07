@@ -107,20 +107,25 @@ const registerCameraSwitch = function(camera: Camera) {
     const originalFacingMode = camera.currentFacingMode;
     let flag = true;
 
-    while(flag) {
-      try {
-        const mode = await camera.swtichFacingMode();
-        if(mode === 'environment') {
-          await camera.switchDevice();
-        }
-        flag = false;
-      } catch (err) {
-        // do nothing
-      }
+//     while(flag) {
+//       try {
+//         const mode = await camera.swtichFacingMode();
+//         if(mode === 'environment') {
+//           await camera.switchDevice();
+//         }
+//         flag = false;
+//       } catch (err) {
+//         // do nothing
+//       }
+//
+//       if(camera.currendDeviceIndex === originalDeviceIndex && camera.currentFacingMode === originalFacingMode) {
+//         break;
+//       }
+//     }
 
-      if(camera.currendDeviceIndex === originalDeviceIndex && camera.currentFacingMode === originalFacingMode) {
-        break;
-      }
+    const mode = await camera.swtichFacingMode();
+    if(mode === 'environment') {
+      await camera.switchDevice();
     }
 
     console.log(camera.deviceIdList, camera.currendDeviceIndex, camera.currentFacingMode);

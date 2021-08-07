@@ -113,16 +113,16 @@ const getStringCameraInfo = function(camera: Camera) {
   const add = function(s: string) {
     str += s + '\n';
   }
-  const constraints = camera.stream.getVideoTracks()[0].getConstraints();
-  const faceModeC = (typeof constraints.facingMode === 'string' ? constraints.facingMode : Object.values(constraints.facingMode)[0]);
+  // const constraints = camera.stream.getVideoTracks()[0].getConstraints();
+  // const faceModeC = (typeof constraints.facingMode === 'string' ? constraints.facingMode : Object.values(constraints.facingMode)[0]);
 
-  add(`devices: ${camera.deviceIdList.join(', ')}`);
-  add(`current device: ${camera.currendDeviceIndex}`);
-  add(`facing mode: ${camera.currentFacingMode}`);
-  add(`device constraint: ${constraints.deviceId}`);
-  add(`facing mode constraint: ${faceModeC}`);
+  // add(`devices: ${camera.deviceIdList.join(', ')}`);
+  // add(`current device: ${camera.currendDeviceIndex}`);
+  // add(`facing mode: ${camera.currentFacingMode}`);
+  // add(`device constraint: ${constraints.deviceId}`);
+  // add(`facing mode constraint: ${faceModeC}`);
 
-  console.log(constraints.facingMode);
+  // console.log(constraints.facingMode);
 
 
   return str;

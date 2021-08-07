@@ -90,45 +90,72 @@ const registerFileUpload = function() {
   });
 }
 
-const registerCameraSwitch = function(camera: Camera) {
-  const button = document.querySelector('main > .input-barcode .switchCamera button');
-  const cameraSrc = <HTMLVideoElement> document.getElementById('cameraSrc');
+interface cameraButtonState {
+  capture?: boolean,
+  switch?: boolean
+}
+const setCameraButtonState = function(state: cameraButtonState) {
+  const captureButton = document.querySelector('main .capture button');
+  const switchButton = document.querySelector('main .switchCamera button');
 
-  if(cameraSrc === null) {
-    throw Error('Element #cameraScr is not defined');
+  if(captureButton === null) {
+    throw Error('Element main .capture button is not defined');
+  }
+  if(switchButton === null) {
+    throw Error('Element main .switchCamera button is not defined');
   }
 
+  if(Object.prototype.hasOwnProperty.call(state, 'capture')) {
+    if(state.capture) {
+      captureButton.classList.remove('disabled');
+    } else {
+      captureButton.classList.add('disabled');
+    }
+  }
+  if(Object.prototype.hasOwnProperty.call(state, 'switch')) {
+    if(state.switch) {
+      switchButton.classList.remove('disabled');
+    } else {
+      switchButton.classList.add('disabled');
+    }
+  }
+}
+
+const registerCameraSwitch = function(camera: Camera) {
+  const button = document.querySelector('main > .input-barcode .switchCamera button');
   if(button === null) {
     throw Error('Element .input-barcode .switchCamera button is not defined');
   }
 
   button.addEventListener('click', async () => {
-    const originalDeviceIndex = camera.currendDeviceIndex;
-    const originalFacingMode = camera.currentFacingMode;
-    let flag = true;
-
-//     while(flag) {
-//       try {
-//         const mode = await camera.swtichFacingMode();
-//         if(mode === 'environment') {
-//           await camera.switchDevice();
-//         }
-//         flag = false;
-//       } catch (err) {
-//         // do nothing
-//       }
-//
-//       if(camera.currendDeviceIndex === originalDeviceIndex && camera.currentFacingMode === originalFacingMode) {
-//         break;
-//       }
-//     }
-
-    const mode = await camera.swtichFacingMode();
-    if(mode === 'environment') {
-      await camera.switchDevice();
+    if(button.classList.contains('disabled')) {
+      return;
     }
 
-    console.log(camera.deviceIdList, camera.currendDeviceIndex, camera.currentFacingMode);
+    try {
+      await camera.swtichFacingMode();
+      setCameraButtonState({
+        capture: true,
+        switch: true
+      });
+
+      camera.registerCanvasUpdate().catch((err) => {
+        if(err === CAMERA_DISCONNECTED) {
+          outputFail('cameraDisconnected');
+          setCameraButtonState({
+            capture: false
+          });
+        } else {
+          throw err;
+        }
+      });
+    } catch(err) {
+      if(err === CAMERA_UNAVAILABLE) {
+        outputFail('cameraUnavailable');
+      } else {
+        throw err;
+      }
+    }
   });
 }
 
@@ -149,7 +176,16 @@ const registerCamera = function() {
   const camera = new Camera(width, height, cameraSrc, cameraPreview);
 
   return camera.init().then(() => {
-    camera.registerCanvasUpdate();
+    camera.registerCanvasUpdate().catch((err) => {
+      if(err === CAMERA_DISCONNECTED) {
+        outputFail('cameraDisconnected');
+        setCameraButtonState({
+          capture: false
+        });
+      } else {
+        throw err;
+      }
+    });
 
     return camera;
   });
@@ -163,6 +199,10 @@ const registerCaptureButton = function() {
   }
 
   captureBtn.addEventListener('click', (e) => {
+    if(captureBtn.classList.contains('disabled')) {
+      return;
+    }
+
     const cameraSrc = <HTMLVideoElement> document.getElementById('cameraSrc');
     const resultFail = document.querySelector('main .result .fail');
     const resultCode = document.querySelector('main .result .code');
@@ -180,21 +220,6 @@ const registerCaptureButton = function() {
     const url = videoToImageUrl(cameraSrc);
     readUrl(url);
   });
-}
-
-const disableCameraButton = function() {
-  const captureBtn = document.querySelector('main .capture button');
-  const cameraSwitchButton = document.querySelector('main .switchCamera button');
-
-  if(captureBtn === null) {
-    throw Error('Element main .capture button is not defined');
-  }
-  if(cameraSwitchButton === null) {
-    throw Error('Element main .switchCamera button is not defined');
-  }
-
-  captureBtn.classList.add('disabled');
-  cameraSwitchButton.classList.add('disabled');
 }
 
 const registerNumberInput = function() {
@@ -256,7 +281,7 @@ const registerNumberInput = function() {
   regisiter(input8);
 }
 
-const registerInfo = function(camera: Camera) {
+const registerInfo = function() {
   const button = document.querySelector('main .info button');
   const output = document.querySelector('main .info .output');
 
@@ -271,7 +296,7 @@ const registerInfo = function(camera: Camera) {
     output.classList.toggle('hidden');
 
     if(!output.classList.contains('hidden')) {
-      output.innerHTML = (await getStringInfo() + getStringCameraInfo(camera)).replace(/\r|\n|\r\n/g, '<br>');
+      output.innerHTML = (await getStringInfo()).replace(/\r|\n|\r\n/g, '<br>');
     }
   });
 }
@@ -280,21 +305,24 @@ window.addEventListener('load', async () => {
   registerModeSwitch();
   registerFileUpload();
   registerNumberInput();
+  registerInfo();
 
   try {
     const camera = await registerCamera();
     registerCameraSwitch(camera);
     registerCaptureButton();
-    registerInfo(camera);
   } catch(err) {
+    setCameraButtonState({
+      capture: false,
+      switch: false
+    });
+
     if(err === CAMERA_UNAVAILABLE) {
       console.log(err);
       outputFail('cameraUnavailable');
-      disableCameraButton();
     } else if(err === CANVAS_UNAVAILABLE) {
       console.log(err);
       outputFail('canvasUnavailable');
-      disableCameraButton();
     } else {
       throw err;
     }

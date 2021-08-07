@@ -177,6 +177,7 @@ main {
     margin: 0.5em auto 0;
     line-height: 1.5em;
     border: 1px solid $c-separator;
+    border-radius: $radius;
 
     .message {
       font-size: 1.5em;
@@ -199,6 +200,7 @@ main {
   > .info {
     display: block;
     font-size: 1em;
+    margin: 0.5em;
 
     button {
       @extend %button;
@@ -215,9 +217,10 @@ main {
     }
 
     .output {
-      margin: 0.5em;
       line-height: 1.5em;
       border: 1px solid $c-separator;
+      border-radius: $radius;
+      margin-top: 0.5em;
       padding: 0.5em;
     }
   }

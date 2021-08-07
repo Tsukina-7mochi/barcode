@@ -293,11 +293,28 @@ const registerNumberInput = function() {
   regisiter(input8);
 }
 
+const registerInfo = function() {
+  const button = document.querySelector('main .info button');
+  const output = document.querySelector('main .info .output');
+
+  if(button === null) {
+    throw Error('Element main .info button is not defined.');
+  }
+  if(output === null) {
+    throw Error('Element main .info .output if not defined');
+  }
+
+  button.addEventListener('click', () => {
+    output.classList.toggle('hidden');
+  });
+}
+
 window.addEventListener('load', async () => {
   registerModeSwitch();
   registerFileUpload();
   registerCameraSwitch();
   registerNumberInput();
+  registerInfo();
 
   try {
     await registerCamera();

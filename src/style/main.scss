@@ -195,4 +195,30 @@ main {
       display: none;
     }
   }
+
+  > .info {
+    display: block;
+    font-size: 1em;
+
+    button {
+      @extend %button;
+
+      width: auto;
+
+      @include insertImageBefore(0.8em, 0.8em, url("../resources/info_white_24dp.svg")) {
+        transform: translate(-5%, 5%);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .output {
+      margin: 0.5em;
+      line-height: 1.5em;
+      border: 1px solid $c-separator;
+      padding: 0.5em;
+    }
+  }
 }

@@ -1,0 +1,232 @@
+main {
+  font-size: 20px;
+
+  > div {
+    display: none;
+
+    &.selected {
+      display: block;
+    }
+  }
+
+  > .input-barcode {
+    video: {
+      display: none;
+    }
+
+    > .camera {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      > .canvasWrapper {
+        position: relative;
+        margin-bottom: 0.5em;
+
+        @media screen and (max-width:640px) {
+          width: 100%;
+        }
+        @media screen and (min-width:640px) {
+          width: min(100%, 640px);
+        }
+
+        &:before {
+          content: "";
+          display: block;
+          padding-top: 50%;
+        }
+
+        canvas {
+          background-color: $c-canvas-bg;
+          position: absolute;
+          width: 100%;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+        }
+      }
+    }
+
+    .wrapper {
+      display: flex;
+
+      > div {
+        flex-grow: 1;
+        margin: 0.1em;
+      }
+    }
+
+    .uploadFile {
+      margin-bottom: 0.5em;
+      font-size: 1em;
+
+      button.upload-text {
+        @extend %button;
+
+        @include insertImageBefore(1em, 1em, url("../resources/file_upload_white_24dp.svg")){
+          transform: translate(0, 15%);
+        };
+      }
+
+      input {
+        display: none;
+      }
+    }
+
+    .switchCamera {
+      margin-bottom: 0.5em;
+      font-size: 1em;
+
+      button {
+        @extend %button;
+
+        @include insertImageBefore(1em, 1em, url("../resources/cameraswitch_white_24dp.svg")){
+          transform: translate(0, 15%);
+        };
+
+        @include disabledButtonFeature;
+      }
+    }
+
+    > .capture {
+      margin: 0.1em;
+
+      button {
+        @extend %button;
+
+        font-size: 2em;
+        @include insertImageBefore(0.8em, 0.8em, url("../resources/photo_camera_white_24dp.svg")){
+          transform: translate(0, 15%);
+        };
+
+        @include disabledButtonFeature;
+      }
+    }
+  }
+
+  > .input-number {
+    margin-top: 1em;
+    font-size: 1.5em;
+
+    > h2 {
+      font-size: 0.8em;
+      text-align: center;
+      font-weight: normal;
+      padding: 0;
+      margin: 0;
+    }
+
+    > .length-13, .length-8 {
+      margin: 0.5em 0;
+      padding: 0 0.5em;
+      height: 2em;
+
+       > .wrapper {
+          height: 100%;
+          margin: 0 auto;
+          display: grid;
+          grid-template-rows: 1fr;
+          gap: 0.1em;
+       }
+    }
+
+    > .length-13 > .wrapper {
+      grid-template-columns: repeat(13, 1fr);
+      max-width: 1.6em * 13 - 0.1em;
+    }
+
+    > .length-8 > .wrapper {
+      grid-template-columns: repeat(8, 1fr);
+      max-width: 1.6em * 8 - 0.1em;
+    }
+
+    input {
+      display: block;
+      box-sizing: border-box;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      font-size: 1em;
+      color: $c-text;
+      border: 1px solid $c-separator;
+      border-radius: $radius;
+
+      // hide arrows
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      -moz-appearance: textfield;
+
+      &:hover {
+        background-color: $c-bg-2;
+      }
+
+      &:last-child {
+        background-color: $c-bg-3;
+      }
+    }
+  }
+
+  > .result {
+    display: block;
+    text-align: center;
+    max-width: 640px;
+    margin: 0.5em auto 0;
+    line-height: 1.5em;
+    border: 1px solid $c-separator;
+    border-radius: $radius;
+
+    .message {
+      font-size: 1.5em;
+      padding: 0.5em;
+      min-height: 1em;
+      background-color: $c-main;
+      color: $c-main-text;
+    }
+
+    .detail {
+      min-height: 1em;
+      padding: 0.5em;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    ul {
+      text-align: left;
+    }
+  }
+
+  > .info {
+    display: block;
+    font-size: 1em;
+    margin: 0.5em;
+
+    button {
+      @extend %button;
+
+      width: auto;
+
+      @include insertImageBefore(1em, 1em, url("../resources/info_white_24dp.svg")) {
+        transform: translate(0, 10%);
+      }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .output {
+      font-size: 0.75em;;
+      line-height: 1.5em;
+      border: 1px solid $c-separator;
+      border-radius: $radius;
+      margin-top: 0.5em;
+      padding: 0.5em;
+    }
+  }
+}

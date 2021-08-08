@@ -4,30 +4,102 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Barcode Reader</title>
   <script src="script.js"></script>
+  <style>
+    img {
+      max-width: 50vw;
+      max-height: 50vh;
+    }
+  </style>
 </head>
 <body>
-  <div class="input">
-    <input id="code" type="text" value="4908011532403">
-    <br>
+  <header>
+    <div class="selectMode">
+      <button class="select-barcode selected"></button>
+      <button class="select-number"></button>
+      <button class="select-ocr"></button>
+    </div>
+  </header>
 
-    <input type="radio" id="code-type-JAN" name="code-type" value="JAN" checked>
-    <label for="code-type-JAN">JAN</label>
-    <br>
-    <input type="radio" id="code-type-Code128-A" name="code-type" value="Code128-A">
-    <label for="code-type-Code128-A">Code128-A</label>
-    <br>
-    <input type="radio" id="code-type-Code128-B" name="code-type" value="Code128-B">
-    <label for="code-type-Code128-B">Code128-B</label>
-    <br>
-    <input type="radio" id="code-type-Code128-C" name="code-type" value="Code128-C">
-    <label for="code-type-Code128-C">Code128-C</label>
-    <br>
+  <main>
+    <div class="input-barcode selected">
+      <!-- video source -->
+      <video id="cameraSrc" autoplay style="display: none;"></video>
 
-    <button id="start">Generate</button>
-  </div>
-  <div id="output">
-  </div>
+      <div class="camera">
+        <div class="canvasWrapper">
+          <canvas id="cameraPreview" ></canvas>
+        </div>
+      </div>
+
+      <div class="wrapper">
+        <div class="uploadFile">
+          <button class="upload-text">Upload Image</button>
+          <input type="file">
+        </div>
+
+        <div class="switchCamera">
+          <button>Switch Camera</button>
+        </div>
+      </div>
+
+      <div class="capture">
+        <button class="unavailable">Capture</button>
+      </div>
+    </div>
+
+    <div class="input-number">
+      <h2>13桁のEANコード</h2>
+      <div class="length-13">
+        <div class="wrapper">
+          <input type="number" class="digit-0" min="0" max="9" step="1">
+          <input type="number" class="digit-1" min="0" max="9" step="1">
+          <input type="number" class="digit-2" min="0" max="9" step="1">
+          <input type="number" class="digit-3" min="0" max="9" step="1">
+          <input type="number" class="digit-4" min="0" max="9" step="1">
+          <input type="number" class="digit-5" min="0" max="9" step="1">
+          <input type="number" class="digit-6" min="0" max="9" step="1">
+          <input type="number" class="digit-7" min="0" max="9" step="1">
+          <input type="number" class="digit-8" min="0" max="9" step="1">
+          <input type="number" class="digit-9" min="0" max="9" step="1">
+          <input type="number" class="digit-10" min="0" max="9" step="1">
+          <input type="number" class="digit-11" min="0" max="9" step="1">
+          <input type="number" class="digit-12" min="0" max="9" step="1" readonly>
+        </div>
+      </div>
+
+      <h2>8桁のEANコード</h2>
+      <div class="length-8">
+        <div class="wrapper">
+          <input type="number" class="digit-0" min="0" max="9" step="1">
+          <input type="number" class="digit-1" min="0" max="9" step="1">
+          <input type="number" class="digit-2" min="0" max="9" step="1">
+          <input type="number" class="digit-3" min="0" max="9" step="1">
+          <input type="number" class="digit-4" min="0" max="9" step="1">
+          <input type="number" class="digit-5" min="0" max="9" step="1">
+          <input type="number" class="digit-6" min="0" max="9" step="1">
+          <input type="number" class="digit-7" min="0" max="9" step="1" readonly>
+        </div>
+      </div>
+    </div>
+
+    <div class="result">
+      <div class="message hidden"></div>
+      <div class="detail">
+        <div class="fail hidden"></div>
+        <div class="code hidden"></div>
+        <div class="ean-code hidden">
+          <div>検出されたEANコード</div>
+          <div class="output"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info">
+      <button></button>
+      <div class="output hidden"></div>
+    </div>
+  </main>
 </body>
 </html>

@@ -80,7 +80,5 @@ export default function JAN(code: string): ImageData {
     binary += '0000000';
   }
 
-  console.log(binary);
-
   return binaryToImageData(binary, 50);
 }

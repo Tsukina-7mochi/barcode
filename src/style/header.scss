@@ -1,0 +1,53 @@
+header {
+  width: 100vw;
+  height: 40px;
+  background-color: $c-main;
+  display: flex;
+  align-items: center;
+    justify-content: center;
+
+  > .selectMode {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > button {
+      display: block;
+      width: 40px;
+      height: 40px;
+      padding: 0 8px;
+      appearance: none;
+      background-color: $c-main;
+      box-sizing: border-box;
+      border: none;
+      outline: none;
+
+      &:hover {
+        background-color: $c-main-2;
+      }
+
+      &:active {
+        background-color: $c-main-3;
+      }
+
+      &:focus {
+        border: 2px solid $c-main-text;
+      }
+
+      &.selected {
+        border-bottom: 3px solid $c-main-text;
+      }
+
+      &.select-barcode {
+        @include insertImageBefore(24px, 24px, url("../resources/document_scanner_white_24dp.svg"));
+      }
+      &.select-number {
+        @include insertImageBefore(24px, 24px, url("../resources/dialpad_white_24dp.svg"));
+      }
+      &.select-ocr {
+        @include insertImageBefore(24px, 24px, url("../resources/pin_white_24dp.svg"));
+      }
+    }
+  }
+}

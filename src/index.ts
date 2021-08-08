@@ -5,6 +5,7 @@ import videoToImageUrl from './misc/vidoToImageUrl';
 import { outputProgress, clearResult, outputCode, outputFail, manualOutputCode, outputOCR } from './misc/result';
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
 import scaleImage from './misc/scaleImage';
+import clipImage from './misc/clipImage';
 import { getStringInfo, getStringCameraInfo } from './misc/getInfo';
 import { CAMERA_UNAVAILABLE, CANVAS_UNAVAILABLE, CAMERA_DISCONNECTED } from './misc/const';
 import Camera from './misc/camera';
@@ -70,6 +71,7 @@ const registerModeSwitch = function() {
 
 // tesseract worker cache
 let tesseractWorker: Tesseract.Worker | null = null;
+
 const readUrl = function(url: string) {
   outputProgress('reading');
 
@@ -238,7 +240,7 @@ const registerCamera = function() {
   });
 }
 
-const registerCaptureButton = function() {
+const registerCaptureButton = function(width: number, height: number) {
   const captureBtn = document.querySelector('main .capture button');
 
   if(captureBtn === null) {
@@ -264,8 +266,12 @@ const registerCaptureButton = function() {
       throw Error('Element main .result .code is not defined.');
     }
 
-    const url = videoToImageUrl(cameraSrc);
-    readUrl(url);
+    const url_ = videoToImageUrl(cameraSrc);
+    console.log(width, height);
+
+    clipImage(url_, width / 8, (Math.max(width, height) - width * 3 / 16) / 2, width * 3 / 4, width * 3 / 16).then((url) => {
+      readUrl(url);
+    })
   });
 }
 
@@ -357,7 +363,7 @@ window.addEventListener('load', async () => {
   try {
     const camera = await registerCamera();
     registerCameraSwitch(camera);
-    registerCaptureButton();
+    registerCaptureButton(camera.width, camera.height);
   } catch(err) {
     setCameraButtonState({
       capture: false,

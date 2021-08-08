@@ -41,6 +41,9 @@ header {
       &.select-number {
         @include insertImageBefore(24px, 24px, url("../resources/dialpad_white_24dp.svg"));
       }
+      &.select-ocr {
+        @include insertImageBefore(24px, 24px, url("../resources/pin_white_24dp.svg"));
+      }
     }
   }
 }

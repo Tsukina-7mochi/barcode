@@ -93,28 +93,77 @@ const clearResult = function() {
   });
 }
 
-const setMessage = function(message: string) {
+const extractCodeFromString = function(str: string): string[] {
+  const restult: string[] = [];
+
+  const detect = function(from: number, length: number) {
+    const part = str.slice(from, from + length);
+    if(calcEanCheckDigit(part.slice(0, -1)) === parseInt(part.slice(-1))) {
+      restult.push(part);
+    }
+  }
+
+  for(let i = 0; i <= str.length - 13; i++) {
+    detect(i, 13);
+  }
+  for(let i = 0; i <= str.length - 8; i++) {
+    detect(i, 8);
+  }
+
+  return restult;
+}
+
+const outputProgress = function(progress: 'reading') {
   const { resultMessage } = getResultElement();
 
-  resultMessage.innerHTML = message;
+  clearResult();
+
+  if(progress === 'reading') {
+    resultMessage.textContent = '読み取り中...';
+    setVisibility({
+      message: true
+    })
+  }
+}
+
+const outputCode = function(code: string) {
+  const { resultMessage, resultCode, resultEanCode } = getResultElement();
+
+  clearResult();
+
+  resultMessage.textContent = '読み取り成功！';
+  resultCode.textContent = code;
+
+  // detect ean code
+  extractCodeFromString(code).forEach((eanCode) => {
+    try {
+      const img = createImage(encode(eanCode, 'JAN'));
+
+      const wrapper = document.createElement('div');
+      const codeStrDiv = document.createElement('div');
+      codeStrDiv.textContent = eanCode;
+
+      wrapper.appendChild(img);
+      wrapper.appendChild(codeStrDiv);
+      resultEanCode.appendChild(wrapper);
+    } catch(err) {
+      console.error(err);
+    }
+  });
 
   setVisibility({
-    message: true
+    message: true,
+    code: true,
+    eanCode: true
   });
 }
 
-const setFail = function(message: string) {
-  const { resultFail } = getResultElement();
+const manualOutputCode = function(code: string) {
+  const { resultMessage, resultCode } = getResultElement();
+  clearResult();
 
-  resultFail.innerHTML = message;
+  resultMessage.textContent = '生成結果';
 
-  setVisibility({
-    fail: true
-  });
-}
-
-const addEanCode = function(code: string) {
-  const { resultEanCode } = getResultElement();
   try {
     const img = createImage(encode(code, 'JAN'));
 
@@ -124,104 +173,48 @@ const addEanCode = function(code: string) {
 
     wrapper.appendChild(img);
     wrapper.appendChild(codeStrDiv);
-    resultEanCode.appendChild(wrapper);
+    resultCode.appendChild(wrapper);
   } catch(err) {
     console.error(err);
   }
-}
-
-const setCode = function(code: string, detectEan: boolean) {
-  const { resultCode } = getResultElement();
-
-  resultCode.innerHTML += code;
 
   setVisibility({
+    message: true,
     code: true
   });
-
-  if(detectEan) {
-    // extract ean code
-    const detect = function(from: number, length: number) {
-    const part = code.slice(from, from + length);
-      if(calcEanCheckDigit(part.slice(0, -1)) === parseInt(part.slice(-1))) {
-        addEanCode(part);
-      }
-    }
-    for(let i = 0; i <= code.length - 13; i++) {
-      detect(i, 13);
-    }
-    for(let i = 0; i <= code.length - 8; i++) {
-      detect(i, 8);
-    }
-
-    setVisibility({
-      eanCode: true
-    });
-  }
-}
-
-const outputProgress = function(progress: 'reading') {
-  clearResult();
-
-  if(progress === 'reading') {
-    setMessage('読み取り中...');
-  }
-}
-
-const outputCode = function(code: string) {
-  clearResult();
-
-  setMessage('読み取り成功！');
-  setCode(code, true);
-}
-
-const manualOutputCode = function(code: string) {
-  clearResult();
-
-  setMessage('生成結果');
-  setCode(code, false);
 }
 
 const outputFail = function(reason: 'readerFailed' | 'cameraUnavailable' | 'canvasUnavailable' | 'cameraDisconnected') {
+  const { resultMessage, resultFail } = getResultElement();
   clearResult();
 
   if(reason === 'readerFailed') {
-    setMessage('読み取り失敗...');
-    setFail(`
-      <ul>
-        <li>
-          バーコードが画面全体になるように撮影してください。
-        </li>
-        <li>
-          暗い場所・曲がった面などでは検出が難しいです。手動入力をお試しください。
-        </li>
-      </ul>
-    `);
+    resultMessage.textContent = '読み取り失敗...';
+    resultFail.textContent = '暗い場所・曲がった面などでは検出が難しいです。手動入力をお試しください。';
   } else if(reason === 'cameraUnavailable') {
-    setMessage('カメラを利用できません');
-    setFail(`
-      <p>
-        カメラの権限が拒否されたか、アプリがカメラを利用できない可能性があります。
-      </p>
-    `);
+    resultMessage.textContent = 'カメラを利用できません';
+    resultFail.textContent = 'カメラの権限が拒否されたか、アプリがカメラを利用できない可能性があります。'
   } else if(reason === 'canvasUnavailable') {
-    setMessage('必要な機能を利用できません');
-    setFail(`
-      <p>
-        お使いのブラウザは古いかもしれません。
-      </p>
-    `);
+    resultMessage.textContent = '必要な機能を利用できません';
+    resultFail.textContent = 'お使いのブラウザは古いかもしれません。';
   } else if(reason === 'cameraDisconnected') {
-    setMessage('カメラが切断されました');
+    resultMessage.textContent = 'カメラが切断されました。';
+    resultFail.textContent = 'ページを更新するか、カメラを切り替えてください。';
   }
+
+  setVisibility({
+    message: true,
+    fail: true
+  })
 }
 
 const outputOCR = function(text: string) {
   clearResult();
-  const { resultCode } = getResultElement();
+  const { resultMessage, resultCode } = getResultElement();
   const result = text.replace(/ /g, '').split(/\n+/).map(str => str.trim()).filter(str => str.length > 0 );
 
-  setMessage('読み取り結果');
+  resultMessage.textContent = '読み取り結果';
+
   const ul = document.createElement('ul');
   result.forEach((text) => {
     const li = document.createElement('li');

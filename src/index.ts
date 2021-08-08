@@ -2,7 +2,7 @@ import './style/style.scss';
 
 import read from './reader/reader';
 import videoToImageUrl from './misc/vidoToImageUrl';
-import { outputProgress, clearResult, outputCode, outputFail, manualOutputCode } from './misc/result';
+import { outputProgress, clearResult, outputCode, outputFail, manualOutputCode, outputOCR } from './misc/result';
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
 import scaleImage from './misc/scaleImage';
 import { getStringInfo, getStringCameraInfo } from './misc/getInfo';
@@ -68,14 +68,37 @@ const registerModeSwitch = function() {
   });
 }
 
+// tesseract worker cache
+let tesseractWorker: Tesseract.Worker | null = null;
 const readUrl = function(url: string) {
   outputProgress('reading');
 
-  return read(url).then((str) => {
-    outputCode(str);
-  }).catch((err) => {
-    outputFail('readerFailed');
-  });
+  if(currentMode === 'barcode') {
+    return read(url).then((str) => {
+      outputCode(str);
+    }).catch((err) => {
+      outputFail('readerFailed');
+    });
+  } else if(currentMode === 'ocr') {
+    (async function() {
+      const { createWorker } = await import('tesseract.js');
+
+      if(tesseractWorker === null) {
+        tesseractWorker = createWorker();
+        await tesseractWorker.load();
+        await tesseractWorker.loadLanguage('eng');
+        await tesseractWorker.initialize('eng');
+        await tesseractWorker.setParameters({
+          tessedit_char_whitelist: '0123456789',
+        });
+      }
+
+      const { data } = await tesseractWorker.recognize(url);
+      console.log(data);
+
+      outputOCR(data.text);
+    })();
+  }
 }
 
 const registerFileUpload = function() {

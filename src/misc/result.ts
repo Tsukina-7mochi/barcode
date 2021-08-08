@@ -133,7 +133,7 @@ const addEanCode = function(code: string) {
 const setCode = function(code: string, detectEan: boolean) {
   const { resultCode } = getResultElement();
 
-  resultCode.innerHTML = code;
+  resultCode.innerHTML += code;
 
   setVisibility({
     code: true
@@ -216,10 +216,30 @@ const outputFail = function(reason: 'readerFailed' | 'cameraUnavailable' | 'canv
   }
 }
 
+const outputOCR = function(text: string) {
+  clearResult();
+  const { resultCode } = getResultElement();
+  const result = text.replace(/ /g, '').split(/\n+/).map(str => str.trim()).filter(str => str.length > 0 );
+
+  setMessage('読み取り結果');
+  const ul = document.createElement('ul');
+  result.forEach((text) => {
+    const li = document.createElement('li');
+    li.textContent = text;
+    ul.appendChild(li);
+  });
+  resultCode.appendChild(ul);
+
+  setVisibility({
+    code: true
+  });
+}
+
 export {
   outputProgress,
   clearResult,
   outputCode,
   outputFail,
-  manualOutputCode
+  manualOutputCode,
+  outputOCR
 }

@@ -27,6 +27,7 @@
     "webpack-cli": "^4.6.0"
   },
   "dependencies": {
-    "quagga": "^0.12.1"
+    "quagga": "^0.12.1",
+    "tesseract.js": "^2.1.5"
   }
 }

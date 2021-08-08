@@ -10,15 +10,19 @@ import { CAMERA_UNAVAILABLE, CANVAS_UNAVAILABLE, CAMERA_DISCONNECTED } from './m
 import Camera from './misc/camera';
 
 const registerModeSwitch = function() {
-  const selectBarcode = document.querySelector('header >  .selectMode >  .select-barcode');
-  const selectNumber = document.querySelector('header > .selectMode > .select-number');
-  const inputBarcode = document.querySelector('main > .input-barcode');
-  const inputNumber = document.querySelector('main > .input-number');
+  const selectBarcode = <HTMLButtonElement> document.querySelector('header >  .selectMode >  .select-barcode');
+  const selectNumber  = <HTMLButtonElement> document.querySelector('header > .selectMode > .select-number');
+  const selectOcr     = <HTMLButtonElement> document.querySelector('header > .selectMode > .select-ocr');
+  const inputBarcode  = <HTMLButtonElement> document.querySelector('main > .input-barcode');
+  const inputNumber   = <HTMLButtonElement> document.querySelector('main > .input-number');
 
   if(selectBarcode === null) {
     throw Error('Element .select-barcode is not defined');
   }
   if(selectNumber === null) {
+    throw Error('Element .select-number is not defined');
+  }
+  if(selectOcr === null) {
     throw Error('Element .select-number is not defined');
   }
   if(inputBarcode === null) {
@@ -31,15 +35,31 @@ const registerModeSwitch = function() {
   selectBarcode.addEventListener('click', () => {
     selectBarcode.classList.add('selected');
     selectNumber.classList.remove('selected');
+    selectOcr.classList.remove('selected');
     inputBarcode.classList.add('selected');
     inputNumber.classList.remove('selected');
+
+    selectBarcode.blur();
   });
 
   selectNumber.addEventListener('click', () => {
     selectBarcode.classList.remove('selected');
     selectNumber.classList.add('selected');
+    selectOcr.classList.remove('selected');
     inputBarcode.classList.remove('selected');
     inputNumber.classList.add('selected');
+
+    selectNumber.blur();
+  });
+
+  selectOcr.addEventListener('click', () => {
+    selectBarcode.classList.remove('selected');
+    selectNumber.classList.remove('selected');
+    selectOcr.classList.add('selected');
+    inputBarcode.classList.add('selected');
+    inputNumber.classList.remove('selected');
+
+    selectOcr.blur();
   });
 }
 

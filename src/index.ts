@@ -73,9 +73,6 @@ let tesseractWorker: Tesseract.Worker | null = null;
 const readUrl = function(url: string) {
   outputProgress('reading');
 
-  console.log(url);
-
-
   if(currentMode === 'barcode') {
     return read(url).then((str) => {
       outputCode(str);

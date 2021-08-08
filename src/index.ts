@@ -9,6 +9,8 @@ import { getStringInfo, getStringCameraInfo } from './misc/getInfo';
 import { CAMERA_UNAVAILABLE, CANVAS_UNAVAILABLE, CAMERA_DISCONNECTED } from './misc/const';
 import Camera from './misc/camera';
 
+let currentMode: 'barcode' | 'number' | 'ocr' = 'barcode';
+
 const registerModeSwitch = function() {
   const selectBarcode = <HTMLButtonElement> document.querySelector('header >  .selectMode >  .select-barcode');
   const selectNumber  = <HTMLButtonElement> document.querySelector('header > .selectMode > .select-number');
@@ -39,6 +41,7 @@ const registerModeSwitch = function() {
     inputBarcode.classList.add('selected');
     inputNumber.classList.remove('selected');
 
+    currentMode = 'barcode';
     selectBarcode.blur();
   });
 
@@ -49,6 +52,7 @@ const registerModeSwitch = function() {
     inputBarcode.classList.remove('selected');
     inputNumber.classList.add('selected');
 
+    currentMode = 'number';
     selectNumber.blur();
   });
 
@@ -59,6 +63,7 @@ const registerModeSwitch = function() {
     inputBarcode.classList.add('selected');
     inputNumber.classList.remove('selected');
 
+    currentMode = 'ocr';
     selectOcr.blur();
   });
 }

@@ -39,7 +39,7 @@ header {
         @include insertImageBefore(24px, 24px, url("../resources/document_scanner_white_24dp.svg"));
       }
       &.select-number {
-        @include insertImageBefore(24px, 24px, url("../resources/pin_white_24dp.svg"));
+        @include insertImageBefore(24px, 24px, url("../resources/dialpad_white_24dp.svg"));
       }
     }
   }

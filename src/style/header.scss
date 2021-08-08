@@ -35,6 +35,10 @@ header {
         border: 2px solid $c-main-text;
       }
 
+      &.selected {
+        border-bottom: 3px solid $c-main-text;
+      }
+
       &.select-barcode {
         @include insertImageBefore(24px, 24px, url("../resources/document_scanner_white_24dp.svg"));
       }

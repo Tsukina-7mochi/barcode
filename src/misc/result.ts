@@ -210,21 +210,46 @@ const outputFail = function(reason: 'readerFailed' | 'cameraUnavailable' | 'canv
 
 const outputOCR = function(text: string) {
   clearResult();
-  const { resultMessage, resultCode } = getResultElement();
+  const { resultMessage, resultCode, resultEanCode } = getResultElement();
   const result = text.replace(/ /g, '').split(/\n+/).map(str => str.trim()).filter(str => str.length > 0 );
 
   resultMessage.textContent = '読み取り結果';
 
-  const ul = document.createElement('ul');
-  result.forEach((text) => {
-    const li = document.createElement('li');
-    li.textContent = text;
-    ul.appendChild(li);
-  });
-  resultCode.appendChild(ul);
+  if(result.length > 0) {
+    const ul = document.createElement('ul');
+    result.forEach((text) => {
+      const li = document.createElement('li');
+      li.textContent = text;
+      ul.appendChild(li);
+    });
+    resultCode.appendChild(ul);
+
+    // detect ean code
+    result.forEach((code) => {
+      extractCodeFromString(code).forEach((eanCode) => {
+        try {
+          const img = createImage(encode(eanCode, 'JAN'));
+
+          const wrapper = document.createElement('div');
+          const codeStrDiv = document.createElement('div');
+          codeStrDiv.textContent = eanCode;
+
+          wrapper.appendChild(img);
+          wrapper.appendChild(codeStrDiv);
+          resultEanCode.appendChild(wrapper);
+        } catch(err) {
+          console.error(err);
+        }
+      });
+    });
+  } else {
+    resultCode.textContent = '検出されませんでした';
+  }
 
   setVisibility({
-    code: true
+    message: true,
+    code: true,
+    eanCode: true
   });
 }
 

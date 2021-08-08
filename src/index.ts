@@ -124,7 +124,6 @@ const registerFileUpload = function() {
       // result must be string using FileReader.readAsDataURL
       const url = <string> reader.result;
       const scaledImgUrl = await scaleImage(url, 600);
-      console.log(scaledImgUrl);
 
       readUrl(scaledImgUrl);
     }

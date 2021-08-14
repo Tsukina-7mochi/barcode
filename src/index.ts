@@ -240,7 +240,7 @@ const registerCamera = function() {
   });
 }
 
-const registerCaptureButton = function(width: number, height: number) {
+const registerCaptureButton = function(camera: Camera) {
   const captureBtn = document.querySelector('main .capture button');
 
   if(captureBtn === null) {
@@ -267,11 +267,29 @@ const registerCaptureButton = function(width: number, height: number) {
     }
 
     const url_ = videoToImageUrl(cameraSrc);
-    console.log(width, height);
+    const clipRect = {
+      x: camera.width / 2 - camera.guideRect.width / (2 * camera.zoom) - camera.canvasRect.x,
+      y: camera.height / 2 - camera.guideRect.height / ( 2 * camera.zoom) - camera.canvasRect.y,
+      width: camera.guideRect.width / camera.zoom,
+      height: camera.guideRect.height / camera.zoom
+    }
 
-    clipImage(url_, width / 8, (Math.max(width, height) - width * 3 / 16) / 2, width * 3 / 4, width * 3 / 16).then((url) => {
+    clipImage(url_, clipRect.x, clipRect.y, clipRect.width, clipRect.height).then((url) => {
       readUrl(url);
     })
+  });
+}
+
+const registerZoom = function(camera: Camera) {
+  const zoomInput = <HTMLInputElement> document.querySelector('main > .input-barcode .zoom input');
+
+  if(zoomInput === null) {
+    throw Error('Element main > .input-barcode .zoom input is not defined');
+  }
+
+  zoomInput.addEventListener('input', () => {
+    camera.zoom = parseFloat(zoomInput.value);
+    camera.updateCanvas();
   });
 }
 
@@ -363,7 +381,8 @@ window.addEventListener('load', async () => {
   try {
     const camera = await registerCamera();
     registerCameraSwitch(camera);
-    registerCaptureButton(camera.width, camera.height);
+    registerCaptureButton(camera);
+    registerZoom(camera);
   } catch(err) {
     setCameraButtonState({
       capture: false,

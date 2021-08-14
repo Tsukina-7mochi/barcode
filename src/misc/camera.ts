@@ -22,6 +22,8 @@ class Camera {
   canvasRect: Rect;
   stream: MediaStream | null = null;
   currentFacingMode: 'environment' | 'user';
+  zoom: number = 1
+  zoomCanvasRect: () => Rect;
   deviceIdList: string[];
   currendDeviceIndex: number;
 
@@ -111,6 +113,13 @@ class Camera {
         height: realHeight
       }
 
+      self.zoomCanvasRect = () => ({
+        x: self.canvasRect.x - self.canvasRect.width / 2 * (self.zoom - 1),
+        y: self.canvasRect.y - self.canvasRect.height / 2 * (self.zoom - 1),
+        width: realWidth * self.zoom,
+        height: realHeight * self.zoom,
+      });
+
       self.cameraPreview.setAttribute('width', canvasWidth + 'px');
       self.cameraPreview.setAttribute('height', canvasHeight + 'px');
 
@@ -143,7 +152,7 @@ class Camera {
 
     self.cameraPreviewCtx.globalCompositeOperation = 'destination-over';
 
-    self.cameraPreviewCtx.drawImage(self.cameraSrc, self.canvasRect.x, self.canvasRect.y, self.canvasRect.width, self.canvasRect.height);
+    self.cameraPreviewCtx.drawImage(self.cameraSrc, self.zoomCanvasRect().x, self.zoomCanvasRect().y, self.zoomCanvasRect().width, self.zoomCanvasRect().height);
 
     self.cameraPreviewCtx.restore();
   }
@@ -174,17 +183,6 @@ class Camera {
     }
 
     return this.currentFacingMode;
-  }
-
-  switchDevice(this: Camera) {
-    if(this.stream) {
-      const track = this.stream.getVideoTracks()[0];
-
-      this.currendDeviceIndex = (this.currendDeviceIndex + 1) % this.deviceIdList.length;
-      return track.applyConstraints({
-        deviceId: { exact: this.deviceIdList[this.currendDeviceIndex] }
-      });
-    }
   }
 }
 

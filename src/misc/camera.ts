@@ -24,8 +24,6 @@ class Camera {
   currentFacingMode: 'environment' | 'user';
   zoom: number = 1
   zoomCanvasRect: () => Rect;
-  deviceIdList: string[];
-  currendDeviceIndex: number;
 
   constructor(width: number, height: number, cameraSrc: HTMLVideoElement, cameraPreview: HTMLCanvasElement) {
     this.width = width;

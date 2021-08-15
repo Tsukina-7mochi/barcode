@@ -229,8 +229,8 @@ const registerCameraSwitch = function(camera: Camera) {
 }
 
 const registerCamera = function() {
-  const width = 640;
-  const height = 320;
+  const width = 1280;
+  const height = 640;
 
   const cameraSrc = <HTMLVideoElement> document.getElementById('cameraSrc');
   if(cameraSrc === null) {

@@ -1,10 +1,11 @@
 header {
   width: 100vw;
   height: 40px;
-  background-color: $c-main;
+  border-bottom: 1px solid $c-separator;
+  margin-bottom: 0.5em;
   display: flex;
   align-items: center;
-    justify-content: center;
+  justify-content: center;
 
   > .selectMode {
     height: 100%;
@@ -18,35 +19,35 @@ header {
       height: 40px;
       padding: 0 8px;
       appearance: none;
-      background-color: $c-main;
+      background-color: inherit;
       box-sizing: border-box;
       border: none;
       outline: none;
 
       &:hover {
-        background-color: $c-main-2;
+        background-color: $c-bg-2;
       }
 
       &:active {
-        background-color: $c-main-3;
+        background-color: $c-bg-3;
       }
 
       &:focus {
-        border: 2px solid $c-main-text;
+        border: 2px solid $c-main;
       }
 
       &.selected {
-        border-bottom: 3px solid $c-main-text;
+        border-bottom: 3px solid $c-main;
       }
 
       &.select-barcode {
-        @include insertImageBefore(24px, 24px, url("../resources/document_scanner_white_24dp.svg"));
+        @include insertImageBefore(24px, 24px, url("../resources/document_scanner_gray_24dp.svg"));
       }
       &.select-number {
-        @include insertImageBefore(24px, 24px, url("../resources/dialpad_white_24dp.svg"));
+        @include insertImageBefore(24px, 24px, url("../resources/dialpad_gray_24dp.svg"));
       }
       &.select-ocr {
-        @include insertImageBefore(24px, 24px, url("../resources/pin_white_24dp.svg"));
+        @include insertImageBefore(24px, 24px, url("../resources/pin_gray_24dp.svg"));
       }
     }
   }

@@ -83,6 +83,23 @@ main {
       }
     }
 
+    .nativeCamera {
+      margin-bottom: 0.5em;
+      font-size: 1em;
+
+      button.upload-text {
+        @extend %button;
+
+        @include insertImageBefore(1em, 1em, url("../resources/photo_camera_white_24dp.svg")){
+          transform: translate(0, 15%);
+        };
+      }
+
+      input {
+        display: none;
+      }
+    }
+
     .switchCamera {
       margin-bottom: 0.5em;
       font-size: 1em;

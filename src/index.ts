@@ -105,8 +105,12 @@ const readUrl = function(url: string) {
 
 const registerFileUpload = function() {
   const uploadFile = document.querySelector('main > .input-barcode .uploadFile');
+  const nativeCamera = document.querySelector('main > .input-barcode .nativeCamera');
   if(uploadFile === null) {
     throw Error('Element .uploadFile is not defined');
+  }
+  if(nativeCamera === null) {
+    throw Error('Element .nativeCamera is not defined.');
   }
 
   const uploadButton = uploadFile.querySelector('button');
@@ -118,7 +122,16 @@ const registerFileUpload = function() {
     throw Error('Element .uploadFile > input[type=file] is not defined')
   }
 
-  uploadInput.addEventListener('change', (e: any) => {
+  const nativeCameraButton = nativeCamera.querySelector('button');
+  const nativeCameraInput = <HTMLInputElement> nativeCamera.querySelector('input[type=file]');
+  if(nativeCameraButton === null) {
+    throw Error('Element .nativeCamera > button is not defined');
+  }
+  if(nativeCameraInput === null) {
+    throw Error('Element .nativeCamera > input[type=file] is not defined')
+  }
+
+  const upload = (e: any) => {
     const file: File = e.target.files[0];
     const reader = new FileReader();
 
@@ -131,11 +144,18 @@ const registerFileUpload = function() {
     }
 
     reader.readAsDataURL(file);
-  });
+  }
+
+  uploadInput.addEventListener('change', upload);
+  nativeCameraInput.addEventListener('change', upload);
 
   uploadButton.addEventListener('click', () => {
     uploadButton.blur();
     uploadInput.click();
+  });
+  nativeCameraButton.addEventListener('click', () => {
+    nativeCameraButton.blur();
+    nativeCameraInput.click();
   });
 }
 

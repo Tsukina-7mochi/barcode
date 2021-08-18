@@ -6,7 +6,7 @@ import { outputProgress, clearResult, outputCode, outputFail, manualOutputCode, 
 import calcEanCheckDigit from './misc/calcEanCheckDigit';
 import scaleImage from './misc/scaleImage';
 import clipImage from './misc/clipImage';
-import { getStringInfo, getStringCameraInfo } from './misc/getInfo';
+import { getStringInfo } from './misc/getInfo';
 import { CAMERA_UNAVAILABLE, CANVAS_UNAVAILABLE, CAMERA_DISCONNECTED } from './misc/const';
 import Camera from './misc/camera';
 
